@@ -47,9 +47,9 @@ static void unrealize(GtkGLArea *area, gpointer user_data)
 		return;
 	}
 
-	glDeleteProgram(program);
 	glDeleteVertexArrays(1, &vao);
 	glDeleteBuffers(1, &vbo);
+	glDeleteProgram(program);
 
 	g_timer_destroy(timer);
 }
