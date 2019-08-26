@@ -56,9 +56,9 @@ static void unrealize(GtkGLArea *area, gpointer user_data)
 		return;
 	}
 
-	glDeleteProgram(program);
 	glDeleteVertexArrays(2, vao);
 	glDeleteBuffers(2, vbo);
+	glDeleteProgram(program);
 }
 
 static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_data)
