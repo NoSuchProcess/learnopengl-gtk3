@@ -73,8 +73,6 @@ static const char *const filename[2] = {
 	"awesomeface.png"
 };
 
-GTimer *timer;
-
 static void realize(GtkGLArea *area, gpointer user_data)
 {
 
@@ -82,8 +80,6 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	if (gtk_gl_area_get_error(area) != NULL) {
 		return;
 	}
-
-	timer = g_timer_new();
 
 	program = shader_make();
 
@@ -151,8 +147,6 @@ static void unrealize(GtkGLArea *area, gpointer user_data)
 	glDeleteVertexArrays(1, &vao);
 	glDeleteBuffers(1, &vbo);
 	glDeleteProgram(program);
-
-	g_timer_destroy(timer);
 }
 
 static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_data)
@@ -187,13 +181,6 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	return TRUE;
 }
 
-static gboolean ontick(GtkWidget *widget, GdkFrameClock *frame_clock, gpointer user_data)
-{
-	gtk_gl_area_queue_render(GTK_GL_AREA(widget));
-
-	return G_SOURCE_CONTINUE;
-}
-
 static void activate(GtkApplication *application, gpointer user_data)
 {
 	GtkWidget *window;
@@ -204,7 +191,6 @@ static void activate(GtkApplication *application, gpointer user_data)
 	g_signal_connect(G_OBJECT(drawing), "realize", G_CALLBACK(realize), NULL);
 	g_signal_connect(G_OBJECT(drawing), "unrealize", G_CALLBACK(unrealize), NULL);
 	g_signal_connect(G_OBJECT(drawing), "render", G_CALLBACK(render), NULL);
-	gtk_widget_add_tick_callback(drawing, ontick, NULL, NULL);
 
 	window = gtk_application_window_new(application);
 	gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
