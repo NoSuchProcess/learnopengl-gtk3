@@ -64,10 +64,10 @@ static void realize(GtkGLArea *area, gpointer user_data)
 		}
 		const GLint width = gdk_pixbuf_get_width(pixbuf);
 		const GLint height = gdk_pixbuf_get_height(pixbuf);
-		const GLint type = gdk_pixbuf_get_has_alpha(pixbuf) ? GL_RGBA : GL_RGB;
+		const GLint format = gdk_pixbuf_get_has_alpha(pixbuf) ? GL_RGBA : GL_RGB;
 		const guint8 *bytes = gdk_pixbuf_read_pixels(pixbuf);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, type, GL_UNSIGNED_BYTE, bytes);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, bytes);
 		glGenerateMipmap(GL_TEXTURE_2D);
 		g_object_unref(G_OBJECT(pixbuf));
 	}
