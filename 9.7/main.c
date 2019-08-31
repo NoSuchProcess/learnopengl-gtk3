@@ -31,7 +31,6 @@ static const char *const filename[2] = {
 
 static void realize(GtkGLArea *area, gpointer user_data)
 {
-
 	gtk_gl_area_make_current(area);
 	if (gtk_gl_area_get_error(area) != NULL) {
 		return;
