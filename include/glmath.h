@@ -372,16 +372,6 @@ static inline vec3 vec3_mulm(const mat4 m, const vec3 v)
 	};
 }
 
-static inline mat4 mat4_frustrum()
-{
-	return (mat4) {
-		.a11 = 0, .a12 = 0, .a13 = 0, .a14 = 0,
-		.a21 = 0, .a22 = 0, .a23 = 0, .a24 = 0,
-		.a31 = 0, .a32 = 0, .a33 = 0, .a34 = 0,
-		.a41 = 0, .a42 = 0, .a43 = 0, .a44 = 0
-	};
-}
-
 static inline void mat2_print(const mat2 m)
 {
 	g_print("[%lf %lf]\n", m.a11, m.a12);
