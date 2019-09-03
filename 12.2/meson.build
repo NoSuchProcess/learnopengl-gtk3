@@ -12,7 +12,7 @@ includes = include_directories('../include')
 m_dep = meson.get_compiler('c').find_library('m', required: false)
 gtk_dep = dependency('gtk+-3.0', version: '>= 3.16')
 gdk_pixbuf_dep = dependency('gdk-pixbuf-2.0', version: '>= 2.32')
-glib_dep = dependency('glib')
+glib_dep = dependency('glib-2.0')
 epoxy_dep = dependency('epoxy')
 
 executable('gtk3gl',
