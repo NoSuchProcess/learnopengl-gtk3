@@ -4,7 +4,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 static GLfloat vertices[] = {
-	// positions // colors // texture coords
+	// positions // colors       // texture coords
 	+0.5f, +0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,	// top right
 	+0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,	// bottom right
 	-0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,	// bottom left
