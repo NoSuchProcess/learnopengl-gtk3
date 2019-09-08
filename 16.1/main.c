@@ -251,9 +251,9 @@ static gboolean enter_notify_event(GtkGLArea *drawing, GdkEvent *event, gpointer
 
 static gboolean motion_notify_event(GtkGLArea *drawing, GdkEvent *event, gpointer user_data)
 {
-	// if (gdk_event_get_event_type(event) != GDK_MOTION_NOTIFY) {
-	// 	return FALSE;
-	// }
+	if (gdk_event_get_event_type(event) != GDK_MOTION_NOTIFY) {
+		return FALSE;
+	}
 
 	gdouble xpos, ypos;
 
