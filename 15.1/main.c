@@ -5,7 +5,7 @@
 #include <glmath.h>
 
 static GLfloat vertices[] = {
-	// positions        // normals       // texture
+	// positions      // normals         // texture
 	+0.5f, +0.5f, +0.5f, +1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
 	+0.5f, -0.5f, +0.5f, +1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
 	+0.5f, +0.5f, -0.5f, +1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
