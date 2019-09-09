@@ -363,7 +363,7 @@ static inline mat4 mat4_look_at(vec3 position, vec3 target, vec3 up)
 	return mat4_mul(look, mat4_translation(vec3_neg(position)));
 }
 
-static inline vec3 vec3_mulm(const mat4 m, const vec3 v)
+static inline vec3 mat4_mulv3(const mat4 m, const vec3 v)
 {
 	return (vec3) {
 		.x = m.a11 * v.x + m.a12 * v.y + m.a13 * v.z,
