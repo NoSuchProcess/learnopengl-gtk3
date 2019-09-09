@@ -181,7 +181,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_FALSE, (const GLfloat *) &view);
 	glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE, (const GLfloat *) &projection);
 	glBindVertexArray(light_vao);
-	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));
+	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices) / 8);
 
 	// Container
 	model = mat4_identity();
@@ -206,7 +206,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, texture[1]);
-	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));
+	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices) / 8);
 
 	glBindVertexArray(0);
 	glUseProgram(0);
