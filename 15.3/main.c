@@ -164,7 +164,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 {
 	mat4 model;
 	const mat4 view = mat4_look_at(cameraPos, vec3_add(cameraPos, cameraFront), cameraUp);
-	const vec3 lightPos = vec3_mulm(mat4_rotation_x(g_timer_elapsed(timer, NULL)), (vec3) {1.2f, 1.0f, 2.0f});
+	const vec3 lightPos = mat4_mulv3(mat4_rotation_x(g_timer_elapsed(timer, NULL)), (vec3) {1.2f, 1.0f, 2.0f});
 
 	const GLint width = gtk_widget_get_allocated_width(GTK_WIDGET(area));
 	const GLint height = gtk_widget_get_allocated_height(GTK_WIDGET(area));
