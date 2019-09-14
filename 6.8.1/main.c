@@ -8,9 +8,9 @@
 typedef struct {
 	vec2 position;
 	vec3 color;
-} vertix;
+} vertex;
 
-static vertix vertices[] = {
+static vertex vertices[] = {
 	{{+0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},	// bottom right
 	{{-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},	// bottom left
 	{{+0.0f, +0.5f}, {0.0f, 0.0f, 1.0f}}	// top
@@ -37,9 +37,9 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const void *) offsetof(vertex, position));
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, color));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const void *) offsetof(vertex, color));
 	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
