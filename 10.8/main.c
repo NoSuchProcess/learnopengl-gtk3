@@ -64,7 +64,7 @@ static const vec3 cubePositions[] = {
 	{1.3f, -2.0f, -2.5f},
 	{1.5f, 2.0f, -2.5f},
 	{1.5f, 0.2f, -1.5f},
-	{-1.3f, 1.0f, -1.5f},
+	{-1.3f, 1.0f, -1.5f}
 };
 
 static GLuint vao;
@@ -322,7 +322,7 @@ static gboolean scroll_event(GtkGLArea *drawing, GdkEvent *event, gpointer user_
 		}
 		xoffset = direction == GDK_SCROLL_LEFT ? -1 : (direction == GDK_SCROLL_RIGHT ? 1 : 0);
 		yoffset = direction == GDK_SCROLL_UP ? -1 : (direction == GDK_SCROLL_DOWN ? 1 : 0);
-	};
+	}
 
 	fov -= yoffset;
 	if (fov <= FOV_MIN) {
