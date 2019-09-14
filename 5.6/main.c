@@ -1,17 +1,23 @@
-#include <gtk/gtk.h>
+#include <stddef.h>
 #include <epoxy/gl.h>
+#include <gtk/gtk.h>
 #include <shader_make.h>
+#include <glmath.h>
 
-static GLfloat vertices[] = {
-	+0.5f, +0.5f,		// top right
-	+0.5f, -0.5f,		// bottom right
-	-0.5f, -0.5f,		// bottom left
-	-0.5f, +0.5f,		// top left
+typedef struct {
+	vec2 position;
+} vertix;
+
+static vertix vertices[] = {
+	{{+0.5f, +0.5f}},		// top right
+	{{+0.5f, -0.5f}},		// bottom right
+	{{-0.5f, -0.5f}},		// bottom left
+	{{-0.5f, +0.5f}}		// top left
 };
 
 static GLuint indices[] = {
 	0, 1, 3,		// first triangle
-	1, 2, 3,		// second triangle
+	1, 2, 3			// second triangle
 };
 
 static GLuint vao;
@@ -40,7 +46,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof indices, indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof (GLfloat), (void *) 0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
