@@ -1,15 +1,21 @@
-#include <gtk/gtk.h>
+#include <stddef.h>
 #include <epoxy/gl.h>
+#include <gtk/gtk.h>
 #include <shader_make.h>
+#include <glmath.h>
 
-static GLfloat vertices[] = {
-	-0.5f, -0.25f,
-	0.0f, -0.25f,
-	-0.25f, +0.25f,
+typedef struct {
+	vec2 position;
+} vertix;
 
-	0.0f, -0.25f,
-	+0.5f, -0.25f,
-	+0.25f, +0.25f,
+static vertix vertices[] = {
+	{{-0.5f, -0.25f}},
+	{{0.0f, -0.25f}},
+	{{-0.25f, +0.25f}},
+
+	{{0.0f, -0.25f}},
+	{{+0.5f, -0.25f}},
+	{{+0.25f, +0.25f}}
 };
 
 static GLuint vao;
@@ -33,7 +39,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof (GLfloat), (void *) 0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
@@ -58,7 +64,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 
 	glUseProgram(program);
 	glBindVertexArray(vao);
-	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices) / 2);
+	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));
 	glBindVertexArray(0);
 	glUseProgram(0);
 
