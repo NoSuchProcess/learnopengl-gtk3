@@ -6,9 +6,9 @@
 
 typedef struct {
 	vec2 position;
-} vertix;
+} vertex;
 
-static vertix vertices[] = {
+static vertex vertices[] = {
 	{{+0.5f, +0.5f}},		// top right
 	{{+0.5f, -0.5f}},		// bottom right
 	{{-0.5f, -0.5f}},		// bottom left
@@ -46,7 +46,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof indices, indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const void *) offsetof(vertex, position));
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
