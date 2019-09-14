@@ -192,7 +192,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glUseProgram(light_program);
 	glUniformMatrix4fv(glGetUniformLocation(light_program, "view"), 1, GL_FALSE, (const GLfloat *) &view);
 	glUniformMatrix4fv(glGetUniformLocation(light_program, "projection"), 1, GL_FALSE, (const GLfloat *) &projection);
-	for (unsigned i = 0; i < G_N_ELEMENTS(pointLightPositions); ++i) {
+	for (unsigned int i = 0; i < G_N_ELEMENTS(pointLightPositions); ++i) {
 		model = mat4_transformation((vec3) {0.2f, 0.2f, 0.2f}, pointLightPositions[i]);
 		glUniformMatrix4fv(glGetUniformLocation(light_program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
 		glBindVertexArray(light_vao);
@@ -214,7 +214,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glUniform3f(glGetUniformLocation(program, "dirLight.specular"), 0.5f, 0.5f, 0.5f);
 
 	// point lights
-	for (unsigned i = 0; i < G_N_ELEMENTS(pointLightPositions); ++i) {
+	for (unsigned int i = 0; i < G_N_ELEMENTS(pointLightPositions); ++i) {
 		GString *name = g_string_new(NULL);
 
 		g_string_printf(name, "pointLights[%u].position", i);
