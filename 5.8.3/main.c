@@ -1,17 +1,23 @@
-#include <gtk/gtk.h>
+#include <stddef.h>
 #include <epoxy/gl.h>
+#include <gtk/gtk.h>
 #include <shader_make.h>
+#include <glmath.h>
 
-static GLfloat vertices1[] = {
-	-0.5f, -0.25f,
-	0.0f, -0.25f,
-	-0.25f, +0.25f,
+typedef struct {
+	vec2 position;
+} vertix;
+
+static vertix vertices1[] = {
+	{{-0.5f, -0.25f}},
+	{{0.0f, -0.25f}},
+	{{-0.25f, +0.25f}}
 };
 
-static GLfloat vertices2[] = {
-	0.0f, -0.25f,
-	+0.5f, -0.25f,
-	+0.25f, +0.25f,
+static vertix vertices2[] = {
+	{{0.0f, -0.25f}},
+	{{+0.5f, -0.25f}},
+	{{+0.25f, +0.25f}}
 };
 
 static GLuint vao[2];
@@ -36,7 +42,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices1, vertices1, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof (GLfloat), (void *) 0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(vao[1]);
@@ -44,7 +50,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices2, vertices2, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof (GLfloat), (void *) 0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
@@ -70,11 +76,11 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 
 	glUseProgram(program[0]);
 	glBindVertexArray(vao[0]);
-	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices1) / 2);
+	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices1));
 
 	glUseProgram(program[1]);
 	glBindVertexArray(vao[1]);
-	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices2) / 2);
+	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices2));
 
 	glBindVertexArray(0);
 	glUseProgram(0);
