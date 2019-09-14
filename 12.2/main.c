@@ -1,52 +1,56 @@
-#include <gtk/gtk.h>
+#include <stddef.h>
 #include <epoxy/gl.h>
-#include <shader_make.h>
+#include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <shader_make.h>
 #include <glmath.h>
 
-static GLfloat vertices[] = {
-	// positions
-	+0.5f, +0.5f, +0.5f,
-	+0.5f, -0.5f, +0.5f,
-	+0.5f, +0.5f, -0.5f,
-	+0.5f, -0.5f, +0.5f,
-	+0.5f, -0.5f, -0.5f,
-	+0.5f, +0.5f, -0.5f,
+typedef struct {
+	vec3 position;
+} vertix;
 
-	+0.5f, +0.5f, +0.5f,
-	+0.5f, +0.5f, -0.5f,
-	-0.5f, +0.5f, -0.5f,
-	+0.5f, +0.5f, +0.5f,
-	-0.5f, +0.5f, -0.5f,
-	-0.5f, +0.5f, +0.5f,
+static vertix vertices[] = {
+	{{+0.5f, +0.5f, +0.5f}},
+	{{+0.5f, -0.5f, +0.5f}},
+	{{+0.5f, +0.5f, -0.5f}},
+	{{+0.5f, -0.5f, +0.5f}},
+	{{+0.5f, -0.5f, -0.5f}},
+	{{+0.5f, +0.5f, -0.5f}},
 
-	-0.5f, -0.5f, +0.5f,
-	-0.5f, +0.5f, +0.5f,
-	-0.5f, +0.5f, -0.5f,
-	-0.5f, -0.5f, +0.5f,
-	-0.5f, +0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
+	{{+0.5f, +0.5f, +0.5f}},
+	{{+0.5f, +0.5f, -0.5f}},
+	{{-0.5f, +0.5f, -0.5f}},
+	{{+0.5f, +0.5f, +0.5f}},
+	{{-0.5f, +0.5f, -0.5f}},
+	{{-0.5f, +0.5f, +0.5f}},
 
-	+0.5f, -0.5f, +0.5f,
-	-0.5f, -0.5f, -0.5f,
-	+0.5f, -0.5f, -0.5f,
-	+0.5f, -0.5f, +0.5f,
-	-0.5f, -0.5f, +0.5f,
-	-0.5f, -0.5f, -0.5f,
+	{{-0.5f, -0.5f, +0.5f}},
+	{{-0.5f, +0.5f, +0.5f}},
+	{{-0.5f, +0.5f, -0.5f}},
+	{{-0.5f, -0.5f, +0.5f}},
+	{{-0.5f, +0.5f, -0.5f}},
+	{{-0.5f, -0.5f, -0.5f}},
 
-	+0.5f, -0.5f, +0.5f,
-	+0.5f, +0.5f, +0.5f,
-	-0.5f, +0.5f, +0.5f,
-	+0.5f, -0.5f, +0.5f,
-	-0.5f, +0.5f, +0.5f,
-	-0.5f, -0.5f, +0.5f,
+	{{+0.5f, -0.5f, +0.5f}},
+	{{-0.5f, -0.5f, -0.5f}},
+	{{+0.5f, -0.5f, -0.5f}},
+	{{+0.5f, -0.5f, +0.5f}},
+	{{-0.5f, -0.5f, +0.5f}},
+	{{-0.5f, -0.5f, -0.5f}},
 
-	+0.5f, +0.5f, -0.5f,
-	+0.5f, -0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
-	+0.5f, +0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
-	-0.5f, +0.5f, -0.5f,
+	{{+0.5f, -0.5f, +0.5f}},
+	{{+0.5f, +0.5f, +0.5f}},
+	{{-0.5f, +0.5f, +0.5f}},
+	{{+0.5f, -0.5f, +0.5f}},
+	{{-0.5f, +0.5f, +0.5f}},
+	{{-0.5f, -0.5f, +0.5f}},
+
+	{{+0.5f, +0.5f, -0.5f}},
+	{{+0.5f, -0.5f, -0.5f}},
+	{{-0.5f, -0.5f, -0.5f}},
+	{{+0.5f, +0.5f, -0.5f}},
+	{{-0.5f, -0.5f, -0.5f}},
+	{{-0.5f, +0.5f, -0.5f}}
 };
 
 static GLuint vao;
@@ -86,7 +90,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindVertexArray(light_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, light_vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof (GLfloat), (void *) 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
 	glEnableVertexAttribArray(0);
 
 	program = shader_make(SHADER_SET_CONTAINER);
@@ -97,7 +101,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof (GLfloat), (void *) 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
@@ -140,7 +144,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_FALSE, (const GLfloat *) &view);
 	glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE, (const GLfloat *) &projection);
 	glBindVertexArray(light_vao);
-	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices) / 3);
+	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));
 
 	// Container
 	model = mat4_identity();
@@ -153,7 +157,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_FALSE, (const GLfloat *) &view);
 	glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE, (const GLfloat *) &projection);
 	glBindVertexArray(vao);
-	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices) / 3);
+	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));
 
 	glBindVertexArray(0);
 	glUseProgram(0);
