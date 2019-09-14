@@ -1,15 +1,21 @@
-#include <gtk/gtk.h>
+#include <stddef.h>
 #include <epoxy/gl.h>
-#include <shader_make.h>
+#include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <shader_make.h>
 #include <glmath.h>
 
-static GLfloat vertices[] = {
-	// positions // colors       // texture coords
-	+0.5f, +0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,	// top right
-	+0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,	// bottom right
-	-0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,	// bottom left
-	-0.5f, +0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,	// top left
+typedef struct {
+	vec2 position;
+	vec3 color;
+	vec2 texture;
+} vertix;
+
+static vertix vertices[] = {
+	{{+0.5f, +0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},	// top right
+	{{+0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},	// bottom right
+	{{-0.5f, -0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},	// bottom left
+	{{-0.5f, +0.5f}, {1.0f, 1.0f, 0.0f}, {0.0f, 1.0f}}	// top left
 };
 
 static GLuint indices[] = {
@@ -80,11 +86,11 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof indices, indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof (GLfloat), (void *) 0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof (GLfloat), (void *) (2 * sizeof (GLfloat)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, color));
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof (GLfloat), (void *) (5 * sizeof (GLfloat)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, texture));
 	glEnableVertexAttribArray(2);
 
 	glUseProgram(program);
