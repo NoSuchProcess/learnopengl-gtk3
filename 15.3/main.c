@@ -12,7 +12,6 @@ typedef struct {
 } vertix;
 
 static vertix vertices[] = {
-	// positions         // normals           // texture
 	{{+0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
 	{{+0.5f, -0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
 	{{+0.5f, +0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
@@ -328,7 +327,7 @@ static gboolean scroll_event(GtkGLArea *drawing, GdkEvent *event, gpointer user_
 		}
 		xoffset = direction == GDK_SCROLL_LEFT ? -1 : (direction == GDK_SCROLL_RIGHT ? 1 : 0);
 		yoffset = direction == GDK_SCROLL_UP ? -1 : (direction == GDK_SCROLL_DOWN ? 1 : 0);
-	};
+	}
 
 	fov -= yoffset;
 	if (fov <= FOV_MIN) {
