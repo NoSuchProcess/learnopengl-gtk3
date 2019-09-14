@@ -194,6 +194,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 
 	// lamp
 	model = mat4_transformation((vec3) {0.2f, 0.2f, 0.2f}, lightPos);
+
 	glUseProgram(light_program);
 	glUniformMatrix4fv(glGetUniformLocation(light_program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
 	glUniformMatrix4fv(glGetUniformLocation(light_program, "view"), 1, GL_FALSE, (const GLfloat *) &view);
