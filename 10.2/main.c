@@ -65,7 +65,7 @@ static const vec3 cubePositions[] = {
 	{1.3f, -2.0f, -2.5f},
 	{1.5f, 2.0f, -2.5f},
 	{1.5f, 0.2f, -1.5f},
-	{-1.3f, 1.0f, -1.5f},
+	{-1.3f, 1.0f, -1.5f}
 };
 
 static GLuint vao;
