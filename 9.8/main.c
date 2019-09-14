@@ -78,7 +78,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 
 	glGenTextures(2, texture);
 
-	for (int i = 0; i < G_N_ELEMENTS(filename); ++i) {
+	for (unsigned int i = 0; i < G_N_ELEMENTS(filename); ++i) {
 		glBindTexture(GL_TEXTURE_2D, texture[i]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
