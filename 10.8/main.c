@@ -1,52 +1,57 @@
-#include <gtk/gtk.h>
+#include <stddef.h>
 #include <epoxy/gl.h>
-#include <shader_make.h>
+#include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <shader_make.h>
 #include <glmath.h>
 
-static GLfloat vertices[] = {
-	// positions      // texture coords
-	+0.5f, +0.5f, +0.5f, 0.0f, 0.0f,
-	+0.5f, -0.5f, +0.5f, 0.0f, 1.0f,
-	+0.5f, +0.5f, -0.5f, 1.0f, 0.0f,
-	+0.5f, -0.5f, +0.5f, 0.0f, 1.0f,
-	+0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-	+0.5f, +0.5f, -0.5f, 1.0f, 0.0f,
+typedef struct {
+	vec3 position;
+	vec2 texture;
+} vertix;
 
-	+0.5f, +0.5f, +0.5f, 0.0f, 1.0f,
-	+0.5f, +0.5f, -0.5f, 1.0f, 1.0f,
-	-0.5f, +0.5f, -0.5f, 1.0f, 0.0f,
-	+0.5f, +0.5f, +0.5f, 0.0f, 1.0f,
-	-0.5f, +0.5f, -0.5f, 1.0f, 0.0f,
-	-0.5f, +0.5f, +0.5f, 0.0f, 0.0f,
+static vertix vertices[] = {
+	{{+0.5f, +0.5f, +0.5f}, {0.0f, 0.0f}},
+	{{+0.5f, -0.5f, +0.5f}, {0.0f, 1.0f}},
+	{{+0.5f, +0.5f, -0.5f}, {1.0f, 0.0f}},
+	{{+0.5f, -0.5f, +0.5f}, {0.0f, 1.0f}},
+	{{+0.5f, -0.5f, -0.5f}, {1.0f, 1.0f}},
+	{{+0.5f, +0.5f, -0.5f}, {1.0f, 0.0f}},
 
-	-0.5f, -0.5f, +0.5f, 0.0f, 0.0f,
-	-0.5f, +0.5f, +0.5f, 0.0f, 1.0f,
-	-0.5f, +0.5f, -0.5f, 1.0f, 1.0f,
-	-0.5f, -0.5f, +0.5f, 0.0f, 0.0f,
-	-0.5f, +0.5f, -0.5f, 1.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+	{{+0.5f, +0.5f, +0.5f}, {0.0f, 1.0f}},
+	{{+0.5f, +0.5f, -0.5f}, {1.0f, 1.0f}},
+	{{-0.5f, +0.5f, -0.5f}, {1.0f, 0.0f}},
+	{{+0.5f, +0.5f, +0.5f}, {0.0f, 1.0f}},
+	{{-0.5f, +0.5f, -0.5f}, {1.0f, 0.0f}},
+	{{-0.5f, +0.5f, +0.5f}, {0.0f, 0.0f}},
 
-	+0.5f, -0.5f, +0.5f, 0.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-	+0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-	+0.5f, -0.5f, +0.5f, 0.0f, 0.0f,
-	-0.5f, -0.5f, +0.5f, 0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
+	{{-0.5f, -0.5f, +0.5f}, {0.0f, 0.0f}},
+	{{-0.5f, +0.5f, +0.5f}, {0.0f, 1.0f}},
+	{{-0.5f, +0.5f, -0.5f}, {1.0f, 1.0f}},
+	{{-0.5f, -0.5f, +0.5f}, {0.0f, 0.0f}},
+	{{-0.5f, +0.5f, -0.5f}, {1.0f, 1.0f}},
+	{{-0.5f, -0.5f, -0.5f}, {1.0f, 0.0f}},
 
-	+0.5f, -0.5f, +0.5f, 1.0f, 1.0f,
-	+0.5f, +0.5f, +0.5f, 1.0f, 0.0f,
-	-0.5f, +0.5f, +0.5f, 0.0f, 0.0f,
-	+0.5f, -0.5f, +0.5f, 1.0f, 1.0f,
-	-0.5f, +0.5f, +0.5f, 0.0f, 0.0f,
-	-0.5f, -0.5f, +0.5f, 0.0f, 1.0f,
+	{{+0.5f, -0.5f, +0.5f}, {0.0f, 0.0f}},
+	{{-0.5f, -0.5f, -0.5f}, {1.0f, 1.0f}},
+	{{+0.5f, -0.5f, -0.5f}, {1.0f, 0.0f}},
+	{{+0.5f, -0.5f, +0.5f}, {0.0f, 0.0f}},
+	{{-0.5f, -0.5f, +0.5f}, {0.0f, 1.0f}},
+	{{-0.5f, -0.5f, -0.5f}, {1.0f, 1.0f}},
 
-	+0.5f, +0.5f, -0.5f, 0.0f, 0.0f,
-	+0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-	+0.5f, +0.5f, -0.5f, 0.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-	-0.5f, +0.5f, -0.5f, 1.0f, 0.0f,
+	{{+0.5f, -0.5f, +0.5f}, {1.0f, 1.0f}},
+	{{+0.5f, +0.5f, +0.5f}, {1.0f, 0.0f}},
+	{{-0.5f, +0.5f, +0.5f}, {0.0f, 0.0f}},
+	{{+0.5f, -0.5f, +0.5f}, {1.0f, 1.0f}},
+	{{-0.5f, +0.5f, +0.5f}, {0.0f, 0.0f}},
+	{{-0.5f, -0.5f, +0.5f}, {0.0f, 1.0f}},
+
+	{{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f}},
+	{{+0.5f, -0.5f, -0.5f}, {0.0f, 1.0f}},
+	{{-0.5f, -0.5f, -0.5f}, {1.0f, 1.0f}},
+	{{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f}},
+	{{-0.5f, -0.5f, -0.5f}, {1.0f, 1.0f}},
+	{{-0.5f, +0.5f, -0.5f}, {1.0f, 0.0f}}
 };
 
 static const vec3 cubePositions[] = {
@@ -133,9 +138,9 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), (void *) 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), (void *) (3 * sizeof (GLfloat)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, texture));
 	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
@@ -189,7 +194,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.f * i), (vec3) {1.0f, 0.3f, 0.5f}));
 
 		glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
-		glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices) / 5);
+		glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));
 	}
 
 	glBindVertexArray(0);
