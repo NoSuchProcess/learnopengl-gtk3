@@ -58,9 +58,9 @@ static GLuint light_vao;
 static GLuint light_vbo;
 static GLuint light_program;
 
-static vec3 cameraPos = (vec3) {0.0f, 0.0f, 5.0f};
-static vec3 cameraFront = (vec3) {0.0f, 0.0f, -1.0f};
-static vec3 cameraUp = (vec3) {0.0f, 1.0f, 0.0f};
+static vec3 cameraPos = {0.0f, 0.0f, 5.0f};
+static vec3 cameraFront = {0.0f, 0.0f, -1.0f};
+static vec3 cameraUp = {0.0f, 1.0f, 0.0f};
 
 #define FOV_MAX 60.
 #define FOV_MIN 1.
