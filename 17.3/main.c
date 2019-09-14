@@ -9,9 +9,9 @@ typedef struct {
 	vec3 position;
 	vec3 normal;
 	vec2 texture;
-} vertix;
+} vertex;
 
-static vertix vertices[] = {
+static vertex vertices[] = {
 	{{+0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
 	{{+0.5f, -0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
 	{{+0.5f, +0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
@@ -109,7 +109,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindVertexArray(light_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, light_vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const void *) offsetof(vertex, position));
 	glEnableVertexAttribArray(0);
 
 	program = shader_make(SHADER_SET_CONTAINER);
@@ -120,11 +120,11 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const void *) offsetof(vertex, position));
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, normal));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const void *) offsetof(vertex, normal));
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, texture));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const void *) offsetof(vertex, texture));
 	glEnableVertexAttribArray(2);
 
 	glGenTextures(2, texture);
