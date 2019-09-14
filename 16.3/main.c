@@ -12,7 +12,6 @@ typedef struct {
 } vertix;
 
 static vertix vertices[] = {
-	// positions         // normals           // texture
 	{{+0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
 	{{+0.5f, -0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
 	{{+0.5f, +0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
@@ -66,7 +65,7 @@ static const vec3 cubePositions[] = {
 	{1.3f, -2.0f, -2.5f},
 	{1.5f, 2.0f, -2.5f},
 	{1.5f, 0.2f, -1.5f},
-	{-1.3f, 1.0f, -1.5f},
+	{-1.3f, 1.0f, -1.5f}
 };
 
 static GLuint light_vao;
@@ -132,7 +131,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	for (unsigned int i = 0; i < G_N_ELEMENTS(texture); ++i) {
 		static const char *const filename[G_N_ELEMENTS(texture)] = {
 			"container.png",
-			"container_specular.png",
+			"container_specular.png"
 		};
 		glBindTexture(GL_TEXTURE_2D, texture[i]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -348,7 +347,7 @@ static gboolean scroll_event(GtkGLArea *drawing, GdkEvent *event, gpointer user_
 		}
 		xoffset = direction == GDK_SCROLL_LEFT ? -1 : (direction == GDK_SCROLL_RIGHT ? 1 : 0);
 		yoffset = direction == GDK_SCROLL_UP ? -1 : (direction == GDK_SCROLL_DOWN ? 1 : 0);
-	};
+	}
 
 	fov -= yoffset;
 	if (fov <= FOV_MIN) {
