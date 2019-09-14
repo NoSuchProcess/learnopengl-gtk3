@@ -7,9 +7,9 @@
 
 typedef struct {
 	vec3 position;
-} vertix;
+} vertex;
 
-static vertix vertices[] = {
+static vertex vertices[] = {
 	{{+0.5f, +0.5f, +0.5f}},
 	{{+0.5f, -0.5f, +0.5f}},
 	{{+0.5f, +0.5f, -0.5f}},
@@ -90,7 +90,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindVertexArray(light_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, light_vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const void *) offsetof(vertex, position));
 	glEnableVertexAttribArray(0);
 
 	program = shader_make(SHADER_SET_CONTAINER);
@@ -101,7 +101,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertix), (const void *) offsetof(vertix, position));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const void *) offsetof(vertex, position));
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
