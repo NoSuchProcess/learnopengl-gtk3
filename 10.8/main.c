@@ -73,9 +73,9 @@ static const char *const filename[2] = {
 	"awesomeface.png"
 };
 
-static vec3 cameraPos = (vec3) {0.0f, 0.0f, 3.0f};
-static vec3 cameraFront = (vec3) {0.0f, 0.0f, -1.0f};
-static vec3 cameraUp = (vec3) {0.0f, 1.0f, 0.0f};
+static vec3 cameraPos = {0.0f, 0.0f, 3.0f};
+static vec3 cameraFront = {0.0f, 0.0f, -1.0f};
+static vec3 cameraUp = {0.0f, 1.0f, 0.0f};
 
 #define FOV_MAX 60.
 #define FOV_MIN 1.
@@ -104,7 +104,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 
 	glGenTextures(2, texture);
 
-	for (int i = 0; i < G_N_ELEMENTS(filename); ++i) {
+	for (unsigned int i = 0; i < G_N_ELEMENTS(filename); ++i) {
 		glBindTexture(GL_TEXTURE_2D, texture[i]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -185,7 +185,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glBindTexture(GL_TEXTURE_2D, texture[1]);
 	glBindVertexArray(vao);
 
-	for (int i = 0; i < G_N_ELEMENTS(cubePositions); i++) {
+	for (unsigned int i = 0; i < G_N_ELEMENTS(cubePositions); i++) {
 		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.f * i), (vec3) {1.0f, 0.3f, 0.5f}));
 
 		glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
