@@ -21,7 +21,7 @@ static vertix vertices[] = {
 
 static GLuint indices[] = {
 	0, 1, 3,		// first triangle
-	1, 2, 3,		// second triangle
+	1, 2, 3			// second triangle
 };
 
 static GLuint vao;
