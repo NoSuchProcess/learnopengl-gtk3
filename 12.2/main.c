@@ -136,13 +136,12 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// lamp
-	model = mat4_transformation((vec3) {
-				    0.2f, 0.2f, 0.2f}, lightPos);
+	model = mat4_transformation((vec3) {0.2f, 0.2f, 0.2f}, lightPos);
 
 	glUseProgram(light_program);
-	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
-	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_FALSE, (const GLfloat *) &view);
-	glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE, (const GLfloat *) &projection);
+	glUniformMatrix4fv(glGetUniformLocation(light_program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
+	glUniformMatrix4fv(glGetUniformLocation(light_program, "view"), 1, GL_FALSE, (const GLfloat *) &view);
+	glUniformMatrix4fv(glGetUniformLocation(light_program, "projection"), 1, GL_FALSE, (const GLfloat *) &projection);
 	glBindVertexArray(light_vao);
 	glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));
 
