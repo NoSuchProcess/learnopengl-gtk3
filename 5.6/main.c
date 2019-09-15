@@ -46,7 +46,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof indices, indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const void *) offsetof(vertex, position));
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
