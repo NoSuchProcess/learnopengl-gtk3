@@ -1,5 +1,5 @@
 project('gtk3gl', 'c', version: '1.0')
-add_project_arguments(['-Wno-unused-parameter', '-Wno-pointer-arith'], language: 'c')
+add_project_arguments(['-Wno-unused-parameter'], language: 'c')
 
 ld = find_program('ld')
 shaders_gen = generator(ld, output: '@BASENAME@.o', arguments: ['--format', 'binary', '--relocatable', '--output', '@OUTPUT@', '@INPUT@'])
