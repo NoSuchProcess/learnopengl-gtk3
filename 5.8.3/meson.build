@@ -5,7 +5,7 @@ ld = find_program('ld')
 shaders_gen = generator(ld, output: '@BASENAME@.o', arguments: ['--format', 'binary', '--relocatable', '--output', '@OUTPUT@', '@INPUT@'])
 shaders = shaders_gen.process('shader/vertex.glsl', 'shader/fragment0.glsl', 'shader/fragment1.glsl')
 
-includes = include_directories('../include')
+glmath_inc = include_directories('../../glmath')
 
 gtk_dep = dependency('gtk+-3.0', version: '>= 3.16')
 glib_dep = dependency('glib-2.0')
@@ -13,6 +13,6 @@ epoxy_dep = dependency('epoxy')
 
 executable('gtk3gl',
     ['main.c', 'shader_compile.c', 'shader_make.c', shaders],
-    include_directories: [includes],
+    include_directories: [glmath_inc],
     dependencies: [gtk_dep, glib_dep, epoxy_dep]
 )
