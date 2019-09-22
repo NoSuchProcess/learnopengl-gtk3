@@ -9,16 +9,16 @@ GLuint shader_make(shader_set set)
 	GLint success;
 
 	// container
-	extern const void _binary____shader_container_vertex_glsl_start;
-	extern const void _binary____shader_container_vertex_glsl_end;
-	extern const void _binary____shader_container_fragment_glsl_start;
-	extern const void _binary____shader_container_fragment_glsl_end;
+	extern const GLchar _binary____shader_container_vertex_glsl_start;
+	extern const GLchar _binary____shader_container_vertex_glsl_end;
+	extern const GLchar _binary____shader_container_fragment_glsl_start;
+	extern const GLchar _binary____shader_container_fragment_glsl_end;
 
 	// light
-	extern const void _binary____shader_light_vertex_glsl_start;
-	extern const void _binary____shader_light_vertex_glsl_end;
-	extern const void _binary____shader_light_fragment_glsl_start;
-	extern const void _binary____shader_light_fragment_glsl_end;
+	extern const GLchar _binary____shader_light_vertex_glsl_start;
+	extern const GLchar _binary____shader_light_vertex_glsl_end;
+	extern const GLchar _binary____shader_light_fragment_glsl_start;
+	extern const GLchar _binary____shader_light_fragment_glsl_end;
 
 	switch (set) {
 	case SHADER_SET_CONTAINER:
