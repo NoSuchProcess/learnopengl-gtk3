@@ -8,12 +8,12 @@ GLuint shader_make(int index)
 	GLuint program;
 	GLint success;
 
-	extern const void _binary____shader_vertex_glsl_start;
-	extern const void _binary____shader_vertex_glsl_end;
-	extern const void _binary____shader_fragment0_glsl_start;
-	extern const void _binary____shader_fragment0_glsl_end;
-	extern const void _binary____shader_fragment1_glsl_start;
-	extern const void _binary____shader_fragment1_glsl_end;
+	extern const GLchar _binary____shader_vertex_glsl_start;
+	extern const GLchar _binary____shader_vertex_glsl_end;
+	extern const GLchar _binary____shader_fragment0_glsl_start;
+	extern const GLchar _binary____shader_fragment0_glsl_end;
+	extern const GLchar _binary____shader_fragment1_glsl_start;
+	extern const GLchar _binary____shader_fragment1_glsl_end;
 
 	vertex = shader_compile(GL_VERTEX_SHADER, &_binary____shader_vertex_glsl_start, &_binary____shader_vertex_glsl_end - &_binary____shader_vertex_glsl_start);
 	switch (index) {
