@@ -9,13 +9,13 @@ GLuint shader_make()
 	GLint success;
 
 	// container
-	extern const GLchar _binary____shader_container_vertex_glsl_start;
-	extern const GLchar _binary____shader_container_vertex_glsl_end;
-	extern const GLchar _binary____shader_container_fragment_glsl_start;
-	extern const GLchar _binary____shader_container_fragment_glsl_end;
+	extern const GLchar _binary____shader_container_vert_start;
+	extern const GLchar _binary____shader_container_vert_end;
+	extern const GLchar _binary____shader_container_frag_start;
+	extern const GLchar _binary____shader_container_frag_end;
 
-	vertex = shader_compile(GL_VERTEX_SHADER, &_binary____shader_container_vertex_glsl_start, &_binary____shader_container_vertex_glsl_end - &_binary____shader_container_vertex_glsl_start);
-	fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____shader_container_fragment_glsl_start, &_binary____shader_container_fragment_glsl_end - &_binary____shader_container_fragment_glsl_start);
+	vertex = shader_compile(GL_VERTEX_SHADER, &_binary____shader_container_vert_start, &_binary____shader_container_vert_end - &_binary____shader_container_vert_start);
+	fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____shader_container_frag_start, &_binary____shader_container_frag_end - &_binary____shader_container_frag_start);
 
 	program = glCreateProgram();
 	glAttachShader(program, vertex);
