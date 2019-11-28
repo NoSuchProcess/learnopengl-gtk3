@@ -2,8 +2,8 @@ project('gtk3gl', 'c', version: '1.0')
 add_project_arguments(['-Wno-unused-parameter'], language: 'c')
 
 ld = find_program('ld')
-shaders_gen = generator(ld, output: '@BASENAME@.o', arguments: ['--format', 'binary', '--relocatable', '--output', '@OUTPUT@', '@INPUT@'])
-shaders = shaders_gen.process('shader/vertex.glsl', 'shader/fragment.glsl')
+shaders_gen = generator(ld, output: '@PLAINNAME@.o', arguments: ['--format', 'binary', '--relocatable', '--output', '@OUTPUT@', '@INPUT@'])
+shaders = shaders_gen.process('shader/shader.vert', 'shader/shader.frag')
 
 glmath_inc = include_directories('../../glmath')
 
