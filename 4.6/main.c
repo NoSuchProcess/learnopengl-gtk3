@@ -1,4 +1,5 @@
 #include <epoxy/gl.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 
 static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_data)
