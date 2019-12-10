@@ -8,20 +8,20 @@ GLuint shader_make(int index)
 	GLuint program;
 	GLint success;
 
-	extern const GLchar _binary____shader_shader_vert_start;
-	extern const GLchar _binary____shader_shader_vert_end;
-	extern const GLchar _binary____shader_shader0_frag_start;
-	extern const GLchar _binary____shader_shader0_frag_end;
-	extern const GLchar _binary____shader_shader1_frag_start;
-	extern const GLchar _binary____shader_shader1_frag_end;
+	extern const GLchar _binary____5_8_3_shader_shader_vert_start;
+	extern const GLchar _binary____5_8_3_shader_shader_vert_end;
+	extern const GLchar _binary____5_8_3_shader_shader0_frag_start;
+	extern const GLchar _binary____5_8_3_shader_shader0_frag_end;
+	extern const GLchar _binary____5_8_3_shader_shader1_frag_start;
+	extern const GLchar _binary____5_8_3_shader_shader1_frag_end;
 
-	vertex = shader_compile(GL_VERTEX_SHADER, &_binary____shader_shader_vert_start, &_binary____shader_shader_vert_end - &_binary____shader_shader_vert_start);
+	vertex = shader_compile(GL_VERTEX_SHADER, &_binary____5_8_3_shader_shader_vert_start, &_binary____5_8_3_shader_shader_vert_end - &_binary____5_8_3_shader_shader_vert_start);
 	switch (index) {
 	case 0:
-		fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____shader_shader0_frag_start, &_binary____shader_shader0_frag_end - &_binary____shader_shader0_frag_start);
+		fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____5_8_3_shader_shader0_frag_start, &_binary____5_8_3_shader_shader0_frag_end - &_binary____5_8_3_shader_shader0_frag_start);
 		break;
 	case 1:
-		fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____shader_shader1_frag_start, &_binary____shader_shader1_frag_end - &_binary____shader_shader1_frag_start);
+		fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____5_8_3_shader_shader1_frag_start, &_binary____5_8_3_shader_shader1_frag_end - &_binary____5_8_3_shader_shader1_frag_start);
 		break;
 	default:
 		fragment = 0;
