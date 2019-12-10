@@ -8,13 +8,13 @@ GLuint shader_make()
 	GLuint program;
 	GLint success;
 
-	extern const GLchar _binary____shader_shader_vert_start;
-	extern const GLchar _binary____shader_shader_vert_end;
-	extern const GLchar _binary____shader_shader_frag_start;
-	extern const GLchar _binary____shader_shader_frag_end;
+	extern const GLchar _binary____6_8_2_shader_shader_vert_start;
+	extern const GLchar _binary____6_8_2_shader_shader_vert_end;
+	extern const GLchar _binary____6_8_2_shader_shader_frag_start;
+	extern const GLchar _binary____6_8_2_shader_shader_frag_end;
 
-	vertex = shader_compile(GL_VERTEX_SHADER, &_binary____shader_shader_vert_start, &_binary____shader_shader_vert_end - &_binary____shader_shader_vert_start);
-	fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____shader_shader_frag_start, &_binary____shader_shader_frag_end - &_binary____shader_shader_frag_start);
+	vertex = shader_compile(GL_VERTEX_SHADER, &_binary____6_8_2_shader_shader_vert_start, &_binary____6_8_2_shader_shader_vert_end - &_binary____6_8_2_shader_shader_vert_start);
+	fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____6_8_2_shader_shader_frag_start, &_binary____6_8_2_shader_shader_frag_end - &_binary____6_8_2_shader_shader_frag_start);
 
 	program = glCreateProgram();
 	glAttachShader(program, vertex);
