@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <math.h>
 #include <epoxy/gl.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 #include <shader_make.h>
 #include <glmath.h>
