@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <epoxy/gl.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <shader_make.h>
