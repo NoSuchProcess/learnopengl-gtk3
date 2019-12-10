@@ -3,7 +3,7 @@ add_project_arguments(['-Wno-unused-parameter'], language: 'c')
 
 ld = find_program('ld')
 
-glmath_inc = include_directories('../glmath')
+glmath_inc = include_directories('include')
 
 m_dep = meson.get_compiler('c').find_library('m', required: false)
 epoxy_dep = dependency('epoxy')
