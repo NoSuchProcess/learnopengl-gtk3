@@ -1,15 +1,7 @@
-project('gtk3gl', 'c', version: '1.0')
-add_project_arguments(['-Wno-unused-parameter'], language: 'c')
-
-ld = find_program('ld')
 shaders_gen = generator(ld, output: '@PLAINNAME@.o', arguments: ['--format', 'binary', '--relocatable', '--output', '@OUTPUT@', '@INPUT@'])
-shaders = shaders_gen.process('shader/shader.vert', 'shader/shader.frag')
-
-glmath_inc = include_directories('../../glmath')
-
-gtk_dep = dependency('gtk+-3.0', version: '>= 3.16')
-glib_dep = dependency('glib-2.0')
-epoxy_dep = dependency('epoxy')
+shaders = shaders_gen.process(
+    'shader/shader.vert', 'shader/shader.frag'
+)
 
 executable('gtk3gl',
     ['main.c', 'shader_compile.c', 'shader_make.c', shaders],
