@@ -9,25 +9,25 @@ GLuint shader_make(shader_set set)
 	GLint success;
 
 	// container
-	extern const GLchar _binary____shader_container_vert_start;
-	extern const GLchar _binary____shader_container_vert_end;
-	extern const GLchar _binary____shader_container_frag_start;
-	extern const GLchar _binary____shader_container_frag_end;
+	extern const GLchar _binary____17_3_shader_container_vert_start;
+	extern const GLchar _binary____17_3_shader_container_vert_end;
+	extern const GLchar _binary____17_3_shader_container_frag_start;
+	extern const GLchar _binary____17_3_shader_container_frag_end;
 
 	// light
-	extern const GLchar _binary____shader_light_vert_start;
-	extern const GLchar _binary____shader_light_vert_end;
-	extern const GLchar _binary____shader_light_frag_start;
-	extern const GLchar _binary____shader_light_frag_end;
+	extern const GLchar _binary____17_3_shader_light_vert_start;
+	extern const GLchar _binary____17_3_shader_light_vert_end;
+	extern const GLchar _binary____17_3_shader_light_frag_start;
+	extern const GLchar _binary____17_3_shader_light_frag_end;
 
 	switch (set) {
 	case SHADER_SET_CONTAINER:
-		vertex = shader_compile(GL_VERTEX_SHADER, &_binary____shader_container_vert_start, &_binary____shader_container_vert_end - &_binary____shader_container_vert_start);
-		fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____shader_container_frag_start, &_binary____shader_container_frag_end - &_binary____shader_container_frag_start);
+		vertex = shader_compile(GL_VERTEX_SHADER, &_binary____17_3_shader_container_vert_start, &_binary____17_3_shader_container_vert_end - &_binary____17_3_shader_container_vert_start);
+		fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____17_3_shader_container_frag_start, &_binary____17_3_shader_container_frag_end - &_binary____17_3_shader_container_frag_start);
 		break;
 	case SHADER_SET_LIGHT:
-		vertex = shader_compile(GL_VERTEX_SHADER, &_binary____shader_light_vert_start, &_binary____shader_light_vert_end - &_binary____shader_light_vert_start);
-		fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____shader_light_frag_start, &_binary____shader_light_frag_end - &_binary____shader_light_frag_start);
+		vertex = shader_compile(GL_VERTEX_SHADER, &_binary____17_3_shader_light_vert_start, &_binary____17_3_shader_light_vert_end - &_binary____17_3_shader_light_vert_start);
+		fragment = shader_compile(GL_FRAGMENT_SHADER, &_binary____17_3_shader_light_frag_start, &_binary____17_3_shader_light_frag_end - &_binary____17_3_shader_light_frag_start);
 		break;
 	default:
 		return 0;
