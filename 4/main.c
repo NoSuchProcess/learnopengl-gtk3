@@ -1,3 +1,4 @@
+#include <glib.h>
 #include <gtk/gtk.h>
 
 static void activate(GtkApplication *application, gpointer user_data)
