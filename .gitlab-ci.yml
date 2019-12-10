@@ -1,0 +1,57 @@
+image: fedora:latest
+
+build:
+  stage: build
+  before_script:
+    - dnf group install -y --nodocs c-development
+    - dnf install -y --nodocs meson ninja-build
+    - dnf install -y --nodocs gtk3-devel gdk-pixbuf2-devel libepoxy-devel
+  script:
+    - meson build
+    - ninja -C build
+  artifacts:
+    paths:
+      - build/4/gtk3gl
+      - build/4.6/gtk3gl
+      - build/5.5/gtk3gl
+      - build/5.6/gtk3gl
+      - build/5.8.1/gtk3gl
+      - build/5.8.2/gtk3gl
+      - build/5.8.3/gtk3gl
+      - build/6.3/gtk3gl
+      - build/6.4/gtk3gl
+      - build/6.5/gtk3gl
+      - build/6.8.1/gtk3gl
+      - build/6.8.2/gtk3gl
+      - build/6.8.3/gtk3gl
+      - build/7.6/gtk3gl
+      - build/7.7/gtk3gl
+      - build/8.18/gtk3gl
+      - build/8.20.1/gtk3gl
+      - build/8.20.2/gtk3gl
+      - build/9.7/gtk3gl
+      - build/9.8/gtk3gl
+      - build/9.8.1/gtk3gl
+      - build/9.8.2/gtk3gl
+      - build/10.2/gtk3gl
+      - build/10.3/gtk3gl
+      - build/10.4/gtk3gl
+      - build/10.7/gtk3gl
+      - build/10.8/gtk3gl
+      - build/12.2/gtk3gl
+      - build/13.1/gtk3gl
+      - build/13.4/gtk3gl
+      - build/13.6/gtk3gl
+      - build/13.7.1/gtk3gl
+      - build/13.7.3/gtk3gl
+      - build/14.1/gtk3gl
+      - build/14.2/gtk3gl
+      - build/14.3/gtk3gl
+      - build/14.4.1/gtk3gl
+      - build/15.1/gtk3gl
+      - build/15.3/gtk3gl
+      - build/16.1/gtk3gl
+      - build/16.3/gtk3gl
+      - build/16.5/gtk3gl
+      - build/16.6/gtk3gl
+      - build/17.3/gtk3gl
