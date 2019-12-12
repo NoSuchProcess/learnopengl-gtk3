@@ -430,6 +430,14 @@ static inline mat2 mat2_mul(const mat2 a, const mat2 b)
 #undef COL
 }
 
+static inline mat2 mat2_tran(const mat2 m)
+{
+	return (mat2) {
+		.a11 = m.a11, .a12 = m.a21,
+		.a21 = m.a12, .a22 = m.a22
+	};
+}
+
 static inline GLfloat mat2_det(const mat2 m)
 {
 	return m.a11 * m.a22 - m.a12 * m.a21;
@@ -535,6 +543,15 @@ static inline mat3 mat3_mul(const mat3 a, const mat3 b)
 	};
 #undef ROW
 #undef COL
+}
+
+static inline mat3 mat3_tran(const mat3 m)
+{
+	return (mat3) {
+		.a11 = m.a11, .a12 = m.a21, .a13 = m.a31,
+		.a21 = m.a12, .a22 = m.a22, .a23 = m.a32,
+		.a31 = m.a13, .a32 = m.a23, .a33 = m.a33
+	};
 }
 
 static inline GLfloat mat3_det(const mat3 m)
@@ -689,6 +706,16 @@ static inline mat4 mat4_mul(const mat4 a, const mat4 b)
 	};
 #undef ROW
 #undef COL
+}
+
+static inline mat4 mat4_tran(const mat4 m)
+{
+	return (mat4) {
+		.a11 = m.a11, .a12 = m.a21, .a13 = m.a31, .a14 = m.a41,
+		.a21 = m.a12, .a22 = m.a22, .a23 = m.a32, .a24 = m.a42,
+		.a31 = m.a13, .a32 = m.a23, .a33 = m.a33, .a34 = m.a43,
+		.a41 = m.a14, .a42 = m.a24, .a43 = m.a34, .a44 = m.a44
+	};
 }
 
 static inline GLfloat mat4_det(const mat4 m)
