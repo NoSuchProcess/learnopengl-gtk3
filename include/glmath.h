@@ -396,14 +396,22 @@ static inline mat2 mat2_sub(const mat2 a, const mat2 b)
 	};
 }
 
-static inline mat2 mat2_mulf(const mat2 a, const GLfloat scale)
+static inline mat2 mat2_mulf(const mat2 m, const GLfloat scale)
 {
 	return (mat2) {
-		.a11 = a.a11 * scale,
-		.a12 = a.a12 * scale,
+		.a11 = m.a11 * scale,
+		.a12 = m.a12 * scale,
 
-		.a21 = a.a21 * scale,
-		.a22 = a.a22 * scale
+		.a21 = m.a21 * scale,
+		.a22 = m.a22 * scale
+	};
+}
+
+static inline vec2 mat2_mulv(const mat2 m, const vec2 v)
+{
+	return (vec2) {
+		.x = m.a11 * v.x + m.a12 * v.y,
+		.y = m.a21 * v.x + m.a22 * v.y
 	};
 }
 
@@ -420,6 +428,11 @@ static inline mat2 mat2_mul(const mat2 a, const mat2 b)
 	};
 #undef ROW
 #undef COL
+}
+
+static inline GLfloat mat2_det(const mat2 m)
+{
+	return m.a11 * m.a22 - m.a12 * m.a21;
 }
 
 
@@ -477,20 +490,29 @@ static inline mat3 mat3_sub(const mat3 a, const mat3 b)
 	};
 }
 
-static inline mat3 mat3_mulf(const mat3 a, const GLfloat scale)
+static inline mat3 mat3_mulf(const mat3 m, const GLfloat scale)
 {
 	return (mat3) {
-		.a11 = a.a11 * scale,
-		.a12 = a.a12 * scale,
-		.a13 = a.a13 * scale,
+		.a11 = m.a11 * scale,
+		.a12 = m.a12 * scale,
+		.a13 = m.a13 * scale,
 
-		.a21 = a.a21 * scale,
-		.a22 = a.a22 * scale,
-		.a23 = a.a23 * scale,
+		.a21 = m.a21 * scale,
+		.a22 = m.a22 * scale,
+		.a23 = m.a23 * scale,
 
-		.a31 = a.a31 * scale,
-		.a32 = a.a32 * scale,
-		.a33 = a.a33 * scale
+		.a31 = m.a31 * scale,
+		.a32 = m.a32 * scale,
+		.a33 = m.a33 * scale
+	};
+}
+
+static inline vec3 mat3_mulv(const mat3 m, const vec3 v)
+{
+	return (vec3) {
+		.x = m.a11 * v.x + m.a12 * v.y + m.a13 * v.z,
+		.y = m.a21 * v.x + m.a22 * v.y + m.a23 * v.z,
+		.z = m.a31 * v.x + m.a32 * v.y + m.a33 * v.z
 	};
 }
 
@@ -513,6 +535,14 @@ static inline mat3 mat3_mul(const mat3 a, const mat3 b)
 	};
 #undef ROW
 #undef COL
+}
+
+static inline GLfloat mat3_det(const mat3 m)
+{
+	return
+		m.a11 * (m.a22 * m.a33 - m.a23 * m.a32) +
+		m.a12 * (m.a23 * m.a31 - m.a21 * m.a33) +
+		m.a13 * (m.a21 * m.a32 - m.a22 * m.a31);
 }
 
 
@@ -588,28 +618,47 @@ static inline mat4 mat4_sub(const mat4 a, const mat4 b)
 	};
 }
 
-static inline mat4 mat4_mulf(const mat4 a, const GLfloat scale)
+static inline mat4 mat4_mulf(const mat4 m, const GLfloat scale)
 {
 	return (mat4) {
-		.a11 = a.a11 * scale,
-		.a12 = a.a12 * scale,
-		.a13 = a.a13 * scale,
-		.a14 = a.a14 * scale,
+		.a11 = m.a11 * scale,
+		.a12 = m.a12 * scale,
+		.a13 = m.a13 * scale,
+		.a14 = m.a14 * scale,
 
-		.a21 = a.a21 * scale,
-		.a22 = a.a22 * scale,
-		.a23 = a.a23 * scale,
-		.a24 = a.a24 * scale,
+		.a21 = m.a21 * scale,
+		.a22 = m.a22 * scale,
+		.a23 = m.a23 * scale,
+		.a24 = m.a24 * scale,
 
-		.a31 = a.a31 * scale,
-		.a32 = a.a32 * scale,
-		.a33 = a.a33 * scale,
-		.a34 = a.a34 * scale,
+		.a31 = m.a31 * scale,
+		.a32 = m.a32 * scale,
+		.a33 = m.a33 * scale,
+		.a34 = m.a34 * scale,
 
-		.a41 = a.a41 * scale,
-		.a42 = a.a42 * scale,
-		.a43 = a.a43 * scale,
-		.a44 = a.a44 * scale
+		.a41 = m.a41 * scale,
+		.a42 = m.a42 * scale,
+		.a43 = m.a43 * scale,
+		.a44 = m.a44 * scale
+	};
+}
+
+static inline vec3 mat4_mulv3(const mat4 m, const vec3 v)
+{
+	return (vec3) {
+		.x = m.a11 * v.x + m.a12 * v.y + m.a13 * v.z,
+		.y = m.a21 * v.x + m.a22 * v.y + m.a23 * v.z,
+		.z = m.a31 * v.x + m.a32 * v.y + m.a33 * v.z
+	};
+}
+
+static inline vec4 mat4_mulv(const mat4 m, const vec4 v)
+{
+	return (vec4) {
+		.x = m.a11 * v.x + m.a12 * v.y + m.a13 * v.z + m.a14 * v.w,
+		.y = m.a21 * v.x + m.a22 * v.y + m.a23 * v.z + m.a24 * v.w,
+		.z = m.a31 * v.x + m.a32 * v.y + m.a33 * v.z + m.a34 * v.w,
+		.w = m.a41 * v.x + m.a42 * v.y + m.a43 * v.z + m.a44 * v.w
 	};
 }
 
@@ -642,13 +691,25 @@ static inline mat4 mat4_mul(const mat4 a, const mat4 b)
 #undef COL
 }
 
-static inline vec3 mat4_mulv3(const mat4 m, const vec3 v)
+static inline GLfloat mat4_det(const mat4 m)
 {
-	return (vec3) {
-		.x = m.a11 * v.x + m.a12 * v.y + m.a13 * v.z,
-		.y = m.a21 * v.x + m.a22 * v.y + m.a23 * v.z,
-		.z = m.a31 * v.x + m.a32 * v.y + m.a33 * v.z
-	};
+	return
+		+ m.a11 * (
+			m.a22 * (m.a33 * m.a44 - m.a34 * m.a43) +
+			m.a23 * (m.a34 * m.a42 - m.a32 * m.a44) +
+			m.a24 * (m.a32 * m.a43 - m.a33 * m.a42))
+		+ m.a12 * (
+			m.a21 * (m.a34 * m.a43 - m.a33 * m.a44) +
+			m.a23 * (m.a31 * m.a44 - m.a34 * m.a41) +
+			m.a24 * (m.a33 * m.a41 - m.a31 * m.a43))
+		+ m.a13 * (
+			m.a21 * (m.a32 * m.a44 - m.a34 * m.a42) +
+			m.a22 * (m.a34 * m.a41 - m.a31 * m.a44) +
+			m.a24 * (m.a31 * m.a42 - m.a32 * m.a41))
+		+ m.a14 * (
+			m.a21 * (m.a33 * m.a42 - m.a32 * m.a43) +
+			m.a22 * (m.a31 * m.a43 - m.a33 * m.a41) +
+			m.a23 * (m.a32 * m.a41 - m.a31 * m.a42));
 }
 
 static inline mat4 mat4_scaling(const vec3 scale)
