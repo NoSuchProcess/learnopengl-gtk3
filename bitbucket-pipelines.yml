@@ -1,0 +1,12 @@
+image: fedora:latest
+
+pipelines:
+  default:
+    - step:
+        script:
+          - dnf group install -y --nodocs c-development
+          - dnf install -y --nodocs meson ninja-build gtk3-devel libepoxy-devel
+          - meson build
+          - ninja -C build
+        artifacts:
+          - build/*
