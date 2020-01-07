@@ -1,5 +1,4 @@
-#ifndef __GLMATH_H__
-#define __GLMATH_H__
+#pragma once
 
 #include <math.h>
 #include <GL/gl.h>
@@ -915,7 +914,5 @@ static inline void mat4_print(const mat4 M)
 	g_print("[%.6f, %.6f, %.6f, %.6f]\n", M.a31, M.a32, M.a33, M.a34);
 	g_print("[%.6f, %.6f, %.6f, %.6f]\n", M.a41, M.a42, M.a43, M.a44);
 }
-
-#endif
 
 #endif
