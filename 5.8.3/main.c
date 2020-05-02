@@ -35,26 +35,32 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	program[0] = shader_make(0);
 	program[1] = shader_make(1);
 
-	glGenVertexArrays(2, vao);
-	glGenBuffers(2, vbo);
+	{
+		GLint index;
 
-	glBindVertexArray(vao[0]);
+		glGenVertexArrays(2, vao);
+		glGenBuffers(2, vbo);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof vertices1, vertices1, GL_STATIC_DRAW);
+		glBindVertexArray(vao[0]);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
-	glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof vertices1, vertices1, GL_STATIC_DRAW);
 
-	glBindVertexArray(vao[1]);
+		index = glGetAttribLocation(program[0], "position");
+		glVertexAttribPointer(index, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
+		glEnableVertexAttribArray(index);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof vertices2, vertices2, GL_STATIC_DRAW);
+		glBindVertexArray(vao[1]);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
-	glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof vertices2, vertices2, GL_STATIC_DRAW);
 
-	glBindVertexArray(0);
+		index = glGetAttribLocation(program[1], "position");
+		glVertexAttribPointer(index, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
+		glEnableVertexAttribArray(index);
+
+		glBindVertexArray(0);
+	}
 }
 
 static void unrealize(GtkGLArea *area, gpointer user_data)
