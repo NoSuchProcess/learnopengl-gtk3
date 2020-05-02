@@ -79,9 +79,6 @@ static void realize(GtkGLArea *area, gpointer user_data)
 
 	program = shader_make();
 
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
-
 	glGenTextures(2, texture);
 
 	for (unsigned int i = 0; i < G_N_ELEMENTS(filename); ++i) {
@@ -108,17 +105,26 @@ static void realize(GtkGLArea *area, gpointer user_data)
 		g_object_unref(G_OBJECT(pixbuf));
 	}
 
-	glBindVertexArray(vao);
+	{
+		GLint index;
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
+		glGenVertexArrays(1, &vao);
+		glGenBuffers(1, &vbo);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, texture));
-	glEnableVertexAttribArray(1);
+		glBindVertexArray(vao);
 
-	glBindVertexArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
+
+		index = glGetAttribLocation(program, "position");
+		glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
+		glEnableVertexAttribArray(index);
+		index = glGetAttribLocation(program, "tex_coord");
+		glVertexAttribPointer(index, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, texture));
+		glEnableVertexAttribArray(index);
+
+		glBindVertexArray(0);
+	}
 
 	glUseProgram(program);
 
