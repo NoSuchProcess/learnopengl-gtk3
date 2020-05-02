@@ -33,18 +33,23 @@ static void realize(GtkGLArea *area, gpointer user_data)
 
 	program = shader_make();
 
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
+	{
+		GLint index;
 
-	glBindVertexArray(vao);
+		glGenVertexArrays(1, &vao);
+		glGenBuffers(1, &vbo);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
+		glBindVertexArray(vao);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
-	glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
 
-	glBindVertexArray(0);
+		index = glGetAttribLocation(program, "position");
+		glVertexAttribPointer(index, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
+		glEnableVertexAttribArray(index);
+
+		glBindVertexArray(0);
+	}
 }
 
 static void unrealize(GtkGLArea *area, gpointer user_data)
