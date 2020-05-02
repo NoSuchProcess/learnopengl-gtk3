@@ -78,9 +78,9 @@ static GLuint vbo;
 static GLuint program;
 static GLuint texture[2];
 
-static vec3 cameraPos = {0.0f, 0.0f, 5.0f};
-static vec3 cameraFront = {0.0f, 0.0f, -1.0f};
-static vec3 cameraUp = {0.0f, 1.0f, 0.0f};
+static vec3 cameraPos = { 0.0f, 0.0f, 5.0f };
+static vec3 cameraFront = { 0.0f, 0.0f, -1.0f };
+static vec3 cameraUp = { 0.0f, 1.0f, 0.0f };
 
 #define FOV_MAX 60.
 #define FOV_MIN 1.
@@ -183,7 +183,7 @@ static void unrealize(GtkGLArea *area, gpointer user_data)
 static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_data)
 {
 	mat4 model;
-	const vec3 lightPos = mat4_mulv3(mat4_rotation_x(g_timer_elapsed(timer, NULL)), (vec3) {1.2f, 1.0f, 2.0f});
+	const vec3 lightPos = mat4_mulv3(mat4_rotation_x(g_timer_elapsed(timer, NULL)), (vec3) { 1.2f, 1.0f, 2.0f });
 	// const vec3 lightPos = (vec3) {1.2f, 1.0f, 2.0f};
 	const mat4 view = mat4_look_at(cameraPos, vec3_add(cameraPos, cameraFront), cameraUp);
 	const GLint width = gtk_widget_get_allocated_width(GTK_WIDGET(area));
@@ -194,7 +194,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// lamp
-	model = mat4_transformation((vec3) {0.2f, 0.2f, 0.2f}, lightPos);
+	model = mat4_transformation((vec3) { 0.2f, 0.2f, 0.2f }, lightPos);
 
 	glUseProgram(light_program);
 	glUniformMatrix4fv(glGetUniformLocation(light_program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
@@ -231,7 +231,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, texture[1]);
 	for (unsigned int i = 0; i < G_N_ELEMENTS(cubePositions); i++) {
-		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.0f * i), (vec3){1.0f, 0.3f, 0.5f}));
+		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.0f * i), (vec3) { 1.0f, 0.3f, 0.5f }));
 		glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
 		glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));
 	}

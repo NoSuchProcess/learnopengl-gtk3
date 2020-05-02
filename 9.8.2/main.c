@@ -174,7 +174,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glBindVertexArray(vao);
 
 	for (unsigned int i = 0; i < G_N_ELEMENTS(cubePositions); i++) {
-		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.f * i), (vec3) {1.0f, 0.3f, 0.5f}));
+		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.f * i), (vec3) { 1.0f, 0.3f, 0.5f }));
 
 		glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
 		glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));

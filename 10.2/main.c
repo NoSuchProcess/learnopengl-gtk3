@@ -162,7 +162,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	float radius = 10.0f;
 	float camX = sin(g_timer_elapsed(timer, NULL)) * radius;
 	float camZ = cos(g_timer_elapsed(timer, NULL)) * radius;
-	const mat4 view = mat4_look_at((vec3) {camX, 0.0, camZ}, (vec3) {0.0, 0.0, 0.0}, (vec3) {0.0, 1.0, 0.0});
+	const mat4 view = mat4_look_at((vec3) { camX, 0.0, camZ }, (vec3) { 0.0, 0.0, 0.0 }, (vec3) { 0.0, 1.0, 0.0 });
 
 	const GLint width = gtk_widget_get_allocated_width(GTK_WIDGET(area));
 	const GLint height = gtk_widget_get_allocated_height(GTK_WIDGET(area));
@@ -183,7 +183,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glBindVertexArray(vao);
 
 	for (unsigned int i = 0; i < G_N_ELEMENTS(cubePositions); i++) {
-		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.f * i), (vec3) {1.0f, 0.3f, 0.5f}));
+		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.f * i), (vec3) { 1.0f, 0.3f, 0.5f }));
 
 		glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
 		glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));

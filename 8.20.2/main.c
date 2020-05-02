@@ -124,7 +124,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	GLint location;
 
 	trans = mat4_rotation_z(g_timer_elapsed(timer, NULL));
-	trans = mat4_mul(mat4_transformation((vec3) {0.5, 0.5, 0.5}, (vec3) {-0.5, 0.5, 0.0}), trans);
+	trans = mat4_mul(mat4_transformation((vec3) { 0.5, 0.5, 0.5 }, (vec3) { -0.5, 0.5, 0.0 }), trans);
 
 	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);

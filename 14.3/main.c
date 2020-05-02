@@ -63,9 +63,9 @@ static GLuint light_vao;
 static GLuint light_vbo;
 static GLuint light_program;
 
-static vec3 cameraPos = {0.0f, 0.0f, 5.0f};
-static vec3 cameraFront = {0.0f, 0.0f, -1.0f};
-static vec3 cameraUp = {0.0f, 1.0f, 0.0f};
+static vec3 cameraPos = { 0.0f, 0.0f, 5.0f };
+static vec3 cameraFront = { 0.0f, 0.0f, -1.0f };
+static vec3 cameraUp = { 0.0f, 1.0f, 0.0f };
 
 #define FOV_MAX 60.
 #define FOV_MIN 1.
@@ -136,7 +136,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 {
 	mat4 model;
 	const mat4 view = mat4_look_at(cameraPos, vec3_add(cameraPos, cameraFront), cameraUp);
-	const vec3 lightPos = (vec3) {1.2f, 1.0f, 2.0f};
+	const vec3 lightPos = (vec3) { 1.2f, 1.0f, 2.0f };
 
 	const GLint width = gtk_widget_get_allocated_width(GTK_WIDGET(area));
 	const GLint height = gtk_widget_get_allocated_height(GTK_WIDGET(area));
@@ -147,14 +147,14 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 		.y = sin(g_timer_elapsed(timer, NULL) * 0.7f),
 		.z = sin(g_timer_elapsed(timer, NULL) * 1.3f)
 	};
-	vec3 diffuseColor = vec3_mulf(lightColor, 0.5f); // decrease the influence
-	vec3 ambientColor = vec3_mulf(diffuseColor, 0.2f); // low influence
+	vec3 diffuseColor = vec3_mulf(lightColor, 0.5f);	// decrease the influence
+	vec3 ambientColor = vec3_mulf(diffuseColor, 0.2f);	// low influence
 
 	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// lamp
-	model = mat4_transformation((vec3) {0.2f, 0.2f, 0.2f}, lightPos);
+	model = mat4_transformation((vec3) { 0.2f, 0.2f, 0.2f }, lightPos);
 
 	glUseProgram(light_program);
 	glUniformMatrix4fv(glGetUniformLocation(light_program, "model"), 1, GL_FALSE, (const GLfloat *) &model);

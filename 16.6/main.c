@@ -74,9 +74,9 @@ static GLuint vbo;
 static GLuint program;
 static GLuint texture[2];
 
-static vec3 cameraPos = {0.0f, 0.0f, 5.0f};
-static vec3 cameraFront = {0.0f, 0.0f, -1.0f};
-static vec3 cameraUp = {0.0f, 1.0f, 0.0f};
+static vec3 cameraPos = { 0.0f, 0.0f, 5.0f };
+static vec3 cameraFront = { 0.0f, 0.0f, -1.0f };
+static vec3 cameraUp = { 0.0f, 1.0f, 0.0f };
 
 #define FOV_MAX 60.
 #define FOV_MIN 1.
@@ -171,7 +171,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glUniform1i(glGetUniformLocation(program, "material.specular"), 1);
 	glUniform1f(glGetUniformLocation(program, "material.shininess"), 32.0f);
 
-	glUniform3fv(glGetUniformLocation(program, "light.position"), 1,  (const GLfloat *) &cameraPos);
+	glUniform3fv(glGetUniformLocation(program, "light.position"), 1, (const GLfloat *) &cameraPos);
 	glUniform3fv(glGetUniformLocation(program, "light.direction"), 1, (const GLfloat *) &cameraFront);
 	glUniform1f(glGetUniformLocation(program, "light.cutOff"), cos(to_radians(12.5f)));
 	glUniform1f(glGetUniformLocation(program, "light.outerCutOff"), cos(to_radians(17.5f)));
@@ -195,7 +195,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, texture[1]);
 	for (unsigned int i = 0; i < G_N_ELEMENTS(cubePositions); i++) {
-		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.0f * i), (vec3){1.0f, 0.3f, 0.5f}));
+		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.0f * i), (vec3) { 1.0f, 0.3f, 0.5f }));
 		glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
 		glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));
 	}

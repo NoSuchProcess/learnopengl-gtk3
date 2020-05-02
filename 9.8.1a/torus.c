@@ -7,8 +7,8 @@
 #define N 32
 #define M 64
 
-#define R 0.6 // radius
-#define W 0.4 // width
+#define R 0.6			// radius
+#define W 0.4			// width
 
 typedef struct {
 	double x, y;
@@ -65,9 +65,15 @@ int main(int argc, char *argv[])
 
 	for (size_t i = 0; i <= N; ++i) {
 		outline[i] = (vec3) {
-		.x = R - W * cos(i * (2 * PI / N)),.y = W * sin(i * (2 * PI / N)),.z = 0.0};
+			.x = R - W * cos(i * (2 * PI / N)),
+			.y = W * sin(i * (2 * PI / N)),
+			.z = 0.0
+		};
 		norm[i] = (vec3) {
-		.x = -cos(i * (2 * PI / N)),.y = sin(i * (2 * PI / N)),.z = 0.0};
+			.x = -cos(i * (2 * PI / N)),
+			.y = sin(i * (2 * PI / N)),
+			.z = 0.0
+		};
 		texture[i] = (vec2) {
 			.x = 0.0,
 			.y = (double) i / (double) N
@@ -116,7 +122,7 @@ int main(int argc, char *argv[])
 			ndx[2] = ((j + N + 2) + i * (N + 1));
 			printf("\t%u, %u, %u", ndx[0], ndx[1], ndx[2]);
 
-			if (!(i+1 == M && j+1 == N)) {
+			if (!(i + 1 == M && j + 1 == N)) {
 				puts(",");
 			}
 		}

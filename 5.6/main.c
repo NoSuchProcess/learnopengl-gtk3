@@ -10,10 +10,10 @@ typedef struct {
 } vertex;
 
 static vertex vertices[] = {
-	{{+0.5f, +0.5f}},		// top right
-	{{+0.5f, -0.5f}},		// bottom right
-	{{-0.5f, -0.5f}},		// bottom left
-	{{-0.5f, +0.5f}}		// top left
+	{{+0.5f, +0.5f}},	// top right
+	{{+0.5f, -0.5f}},	// bottom right
+	{{-0.5f, -0.5f}},	// bottom left
+	{{-0.5f, +0.5f}}	// top left
 };
 
 static GLuint indices[] = {

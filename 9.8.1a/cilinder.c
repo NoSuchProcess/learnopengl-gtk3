@@ -66,14 +66,13 @@ vec3 vec3_cross(const vec3 a, const vec3 b)
 
 double vec3_length(const vec3 v)
 {
-        return sqrt(vec3_dot(v, v));
+	return sqrt(vec3_dot(v, v));
 }
 
 static vec3 vec3_normalize(const vec3 v)
 {
 	return vec3_divf(v, vec3_length(v));
 }
-
 
 static void vertex_print(const vec3 v, const vec3 n, const vec2 t)
 {
@@ -82,15 +81,15 @@ static void vertex_print(const vec3 v, const vec3 n, const vec2 t)
 
 int main(int argc, char *argv[])
 {
-	vec3 point1 = (vec3) {1.0, -1.0, 0.0}; 
-	vec3 point2 = (vec3) {1.0, +1.0, 0.0}; 
+	vec3 point1 = (vec3) { 1.0, -1.0, 0.0 };
+	vec3 point2 = (vec3) { 1.0, +1.0, 0.0 };
 
 	/* vertices */
 	puts("static vertex_t vertices[] = {");
 	for (size_t i = 0; i <= N; ++i) {
-		vertex_print(point1, vec3_normalize((vec3) {point1.x, 0.0, point1.z}), (vec2) {(double) i / (double) N, 1.0});
+		vertex_print(point1, vec3_normalize((vec3) { point1.x, 0.0, point1.z }), (vec2) { (double) i / (double) N, 1.0 });
 		puts(",");
-		vertex_print(point2, vec3_normalize((vec3) {point2.x, 0.0, point2.z}), (vec2) {(double) i / (double) N, 0.0});
+		vertex_print(point2, vec3_normalize((vec3) { point2.x, 0.0, point2.z }), (vec2) { (double) i / (double) N, 0.0 });
 		puts(i < N ? "," : "");
 
 		point1 = vec3_rotate_y(point1, (2.0 * PI / N));
