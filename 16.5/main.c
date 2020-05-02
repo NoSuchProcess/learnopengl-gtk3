@@ -93,49 +93,58 @@ static void realize(GtkGLArea *area, gpointer user_data)
 
 	program = shader_make();
 
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
+	{
+		GLint index;
 
-	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, normal));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, texture));
-	glEnableVertexAttribArray(2);
+		glGenVertexArrays(1, &vao);
+		glGenBuffers(1, &vbo);
 
-	glGenTextures(2, texture);
-	for (unsigned int i = 0; i < G_N_ELEMENTS(texture); ++i) {
-		static const char *const filename[G_N_ELEMENTS(texture)] = {
-			"container.png",
-			"container_specular.png"
-		};
-		glBindTexture(GL_TEXTURE_2D, texture[i]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glBindVertexArray(vao);
 
-		GError *error = NULL;
-		GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(filename[i], &error);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
 
-		if (pixbuf == NULL) {
-			g_error("Error loading file: #%d %s\n", error->code, error->message);
-			g_error_free(error);
+		index = glGetAttribLocation(program, "position");
+		glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
+		glEnableVertexAttribArray(index);
+		index = glGetAttribLocation(program, "aNormal");
+		glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, normal));
+		glEnableVertexAttribArray(index);
+		index = glGetAttribLocation(program, "aTexCoords");
+		glVertexAttribPointer(index, 2, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, texture));
+		glEnableVertexAttribArray(index);
+
+		glGenTextures(2, texture);
+		for (unsigned int i = 0; i < G_N_ELEMENTS(texture); ++i) {
+			static const char *const filename[G_N_ELEMENTS(texture)] = {
+				"container.png",
+				"container_specular.png"
+			};
+			glBindTexture(GL_TEXTURE_2D, texture[i]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			GError *error = NULL;
+			GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(filename[i], &error);
+
+			if (pixbuf == NULL) {
+				g_error("Error loading file: #%d %s\n", error->code, error->message);
+				g_error_free(error);
+			}
+			const GLint width = gdk_pixbuf_get_width(pixbuf);
+			const GLint height = gdk_pixbuf_get_height(pixbuf);
+			const GLint format = gdk_pixbuf_get_has_alpha(pixbuf) ? GL_RGBA : GL_RGB;
+			const guint8 *bytes = gdk_pixbuf_read_pixels(pixbuf);
+
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, bytes);
+			glGenerateMipmap(GL_TEXTURE_2D);
+			g_object_unref(G_OBJECT(pixbuf));
 		}
-		const GLint width = gdk_pixbuf_get_width(pixbuf);
-		const GLint height = gdk_pixbuf_get_height(pixbuf);
-		const GLint format = gdk_pixbuf_get_has_alpha(pixbuf) ? GL_RGBA : GL_RGB;
-		const guint8 *bytes = gdk_pixbuf_read_pixels(pixbuf);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, bytes);
-		glGenerateMipmap(GL_TEXTURE_2D);
-		g_object_unref(G_OBJECT(pixbuf));
+		glBindVertexArray(0);
 	}
-
-	glBindVertexArray(0);
 }
 
 static void unrealize(GtkGLArea *area, gpointer user_data)
