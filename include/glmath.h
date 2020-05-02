@@ -1,7 +1,7 @@
 #pragma once
 
 #include <math.h>
-#include <GL/gl.h>
+#include <epoxy/gl.h>
 
 #define GLMATH_PI	3.141592653589793238462643383279502884197169399375105820974
 #define GLMATH_PI_2	1.570796326794896619231321691639751442098584699687552910487
@@ -248,6 +248,33 @@ static inline vec3 vec3_cross(const vec3 a, const vec3 b)
 		.y = a.z * b.x - a.x * b.z,
 		.z = a.x * b.y - a.y * b.x
 	};
+}
+
+static inline vec3 vec3_rotate_x(const vec3 a, const GLfloat angle)
+{
+        return (vec3) {
+                .x = a.x,
+                .y = a.y * cos(angle) - a.z * sin(angle),
+                .z = a.y * sin(angle) + a.z * cos(angle)
+        };
+}
+
+static inline vec3 vec3_rotate_y(const vec3 a, const GLfloat angle)
+{
+        return (vec3) {
+                .x = a.x * cos(angle) + a.z * sin(angle),
+                .y = a.y,
+                .z = -a.x * sin(angle) + a.z * cos(angle)
+        };
+}
+
+static inline vec3 vec3_rotate_z(const vec3 a, const GLfloat angle)
+{
+        return (vec3) {
+                .x = a.x * cos(angle) - a.y * sin(angle),
+                .y = a.x * sin(angle) + a.y * cos(angle),
+                .z = a.z
+        };
 }
 
 
