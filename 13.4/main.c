@@ -86,29 +86,46 @@ static void realize(GtkGLArea *area, gpointer user_data)
 
 	light_program = shader_make(SHADER_SET_LIGHT);
 
-	glGenVertexArrays(1, &light_vao);
-	glGenBuffers(1, &light_vbo);
+	{
+		GLint index;
 
-	glBindVertexArray(light_vao);
-	glBindBuffer(GL_ARRAY_BUFFER, light_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
-	glEnableVertexAttribArray(0);
+		glGenVertexArrays(1, &light_vao);
+		glGenBuffers(1, &light_vbo);
+
+		glBindVertexArray(light_vao);
+
+		glBindBuffer(GL_ARRAY_BUFFER, light_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
+
+		index = glGetAttribLocation(light_program, "position");
+		glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
+		glEnableVertexAttribArray(index);
+
+		glBindVertexArray(0);
+	}
 
 	program = shader_make(SHADER_SET_CONTAINER);
 
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
+	{
+		GLint index;
 
-	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, normal));
-	glEnableVertexAttribArray(1);
+		glGenVertexArrays(1, &vao);
+		glGenBuffers(1, &vbo);
 
-	glBindVertexArray(0);
+		glBindVertexArray(vao);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
+
+		index = glGetAttribLocation(program, "position");
+		glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, position));
+		glEnableVertexAttribArray(index);
+		index = glGetAttribLocation(program, "aNormal");
+		glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof (vertex), (const GLvoid *) offsetof(vertex, normal));
+		glEnableVertexAttribArray(index);
+
+		glBindVertexArray(0);
+	}
 }
 
 static void unrealize(GtkGLArea *area, gpointer user_data)
