@@ -46,23 +46,32 @@ static void realize(GtkGLArea *area, gpointer user_data)
 
 	program = shader_make();
 
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
+	{
+		GLint index;
 
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
+		glGenVertexArrays(1, &vao);
+		glBindVertexArray(vao);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (vertex_t), (const GLvoid *) offsetof(vertex_t, position));
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof (vertex_t), (const GLvoid *) offsetof(vertex_t, normal));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof (vertex_t), (const GLvoid *) offsetof(vertex_t, texture));
-	glEnableVertexAttribArray(2);
+		glGenBuffers(1, &vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
 
-	glGenBuffers(1, &ebo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof indices, indices, GL_STATIC_DRAW);
+		glGenBuffers(1, &ebo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof indices, indices, GL_STATIC_DRAW);
+
+		index = glGetAttribLocation(program, "vec_position");
+		glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof (vertex_t), (const GLvoid *) offsetof(vertex_t, position));
+		glEnableVertexAttribArray(index);
+		index = glGetAttribLocation(program, "vec_normal");
+		glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof (vertex_t), (const GLvoid *) offsetof(vertex_t, normal));
+		glEnableVertexAttribArray(index);
+		index = glGetAttribLocation(program, "tex_coord");
+		glVertexAttribPointer(index, 2, GL_FLOAT, GL_FALSE, sizeof (vertex_t), (const GLvoid *) offsetof(vertex_t, texture));
+		glEnableVertexAttribArray(index);
+
+		glBindVertexArray(0);
+	}
 
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -87,16 +96,12 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glGenerateMipmap(GL_TEXTURE_2D);
 	g_object_unref(G_OBJECT(pixbuf));
 
-	glBindVertexArray(0);
-
-	glUseProgram(program);
-
 	const mat4 view = mat4_translation((vec3) { 0.0f, 0.0f, -3.0f });
 	model = mat4_identity();
 
+	glUseProgram(program);
 	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_FALSE, (const GLfloat *) &view);
 	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
-
 	glUseProgram(0);
 
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
