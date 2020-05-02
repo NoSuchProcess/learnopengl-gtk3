@@ -28,14 +28,13 @@ static void realize(GtkGLArea *area, gpointer user_data)
 
 	program = shader_make();
 
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
-
 	{
 		GLint index;
 
+		glGenVertexArrays(1, &vao);
 		glBindVertexArray(vao);
 
+		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
 
