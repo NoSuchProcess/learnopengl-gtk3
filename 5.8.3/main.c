@@ -39,10 +39,9 @@ static void realize(GtkGLArea *area, gpointer user_data)
 		GLint index;
 
 		glGenVertexArrays(2, vao);
-		glGenBuffers(2, vbo);
-
 		glBindVertexArray(vao[0]);
 
+		glGenBuffers(2, vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof vertices1, vertices1, GL_STATIC_DRAW);
 
