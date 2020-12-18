@@ -30,6 +30,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 		return;
 	}
 
+	glClearColor(0.2, 0.3, 0.3, 1.0);
 
 	program = shader_make();
 
@@ -75,7 +76,6 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	const GLfloat offset = sin(g_timer_elapsed(timer, NULL)) / 2.;
 	GLint location;
 
-	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	location = glGetUniformLocation(program, "offset");

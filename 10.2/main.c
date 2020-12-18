@@ -89,6 +89,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 		return;
 	}
 
+	glClearColor(0.2, 0.3, 0.3, 1.0);
 
 	program = shader_make();
 
@@ -174,7 +175,6 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	const GLint height = gtk_widget_get_allocated_height(GTK_WIDGET(area));
 	const mat4 projection = mat4_perspective(radians(45.), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
 
-	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glUseProgram(program);

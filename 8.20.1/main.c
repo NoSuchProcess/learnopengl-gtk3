@@ -45,6 +45,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 		return;
 	}
 
+	glClearColor(0.2, 0.3, 0.3, 1.0);
 
 	program = shader_make();
 
@@ -132,7 +133,6 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	trans = mat4_transformation((vec3) { 0.5, 0.5, 0.5 }, (vec3) { -0.5, 0.5, 0.0 });
 	trans = mat4_mul(mat4_rotation_z(g_timer_elapsed(timer, NULL)), trans);
 
-	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(program);

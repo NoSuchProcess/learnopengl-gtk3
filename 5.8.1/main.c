@@ -30,6 +30,8 @@ static void realize(GtkGLArea *area, gpointer user_data)
 		return;
 	}
 
+	glClearColor(0.2, 0.3, 0.3, 1.0);
+
 	program = shader_make();
 
 	{
@@ -64,7 +66,6 @@ static void unrealize(GtkGLArea *area, gpointer user_data)
 
 static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_data)
 {
-	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(program);

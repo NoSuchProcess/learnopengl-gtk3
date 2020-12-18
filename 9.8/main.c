@@ -75,6 +75,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 		return;
 	}
 
+	glClearColor(0.2, 0.3, 0.3, 1.0);
 
 	program = shader_make();
 
@@ -160,7 +161,6 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	const mat4 model = mat4_rotation(g_timer_elapsed(timer, NULL) * radians(50.f), (vec3) { 0.5f, 1.0f, 0.0f });
 	const mat4 projection = mat4_perspective(radians(45.), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
 
-	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(program);

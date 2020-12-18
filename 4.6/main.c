@@ -2,9 +2,18 @@
 #include <gtk/gtk.h>
 #include <epoxy/gl.h>
 
+static void realize(GtkGLArea *area, gpointer user_data)
+{
+	gtk_gl_area_make_current(area);
+	if (gtk_gl_area_get_error(area) != NULL) {
+		return;
+	}
+
+	glClearColor(0.2, 0.3, 0.3, 1.0);
+}
+
 static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_data)
 {
-	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	return TRUE;
@@ -16,6 +25,7 @@ static void activate(GtkApplication *application, gpointer user_data)
 	GtkWidget *drawing;
 
 	drawing = gtk_gl_area_new();
+	g_signal_connect(G_OBJECT(drawing), "realize", G_CALLBACK(realize), NULL);
 	g_signal_connect(G_OBJECT(drawing), "render", G_CALLBACK(render), NULL);
 
 	window = gtk_application_window_new(application);
