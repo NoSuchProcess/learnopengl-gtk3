@@ -3,7 +3,7 @@ shaders = shaders_gen.process(
     'shader/shader.vert', 'shader/shader.frag'
 )
 
-executable('gtk3gl',
+executable('gtk4gl',
     ['main.c', 'shader_compile.c', 'shader_make.c', shaders],
     include_directories: [glmath_inc],
     dependencies: [gtk_dep, glib_dep, epoxy_dep]

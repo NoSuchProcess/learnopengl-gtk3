@@ -319,9 +319,9 @@ static void activate(GtkApplication *application, gpointer user_data)
 
 	window = gtk_application_window_new(application);
 	gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
-	gtk_container_add(GTK_CONTAINER(window), drawing);
+	gtk_window_set_child(GTK_WINDOW(window), drawing);
 
-	gtk_widget_show_all(window);
+	gtk_widget_show(window);
 }
 
 int main(int argc, char *argv[])
