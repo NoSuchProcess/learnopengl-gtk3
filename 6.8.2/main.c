@@ -30,7 +30,6 @@ static void realize(GtkGLArea *area, gpointer user_data)
 		return;
 	}
 
-	timer = g_timer_new();
 
 	program = shader_make();
 
@@ -53,10 +52,14 @@ static void realize(GtkGLArea *area, gpointer user_data)
 
 		glBindVertexArray(0);
 	}
+
+	timer = g_timer_new();
 }
 
 static void unrealize(GtkGLArea *area, gpointer user_data)
 {
+	g_timer_destroy(timer);
+
 	gtk_gl_area_make_current(area);
 	if (gtk_gl_area_get_error(area) != NULL) {
 		return;
@@ -65,8 +68,6 @@ static void unrealize(GtkGLArea *area, gpointer user_data)
 	glDeleteVertexArrays(1, &vao);
 	glDeleteBuffers(1, &vbo);
 	glDeleteProgram(program);
-
-	g_timer_destroy(timer);
 }
 
 static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_data)
