@@ -105,7 +105,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glUseProgram(program);
 	glUniform1i(glGetUniformLocation(program, "texture1"), 0);
 	glUniform1i(glGetUniformLocation(program, "texture2"), 1);
-	glUseProgram(program);
+	glUseProgram(0);
 
 	timer = g_timer_new();
 }
