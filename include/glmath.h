@@ -51,12 +51,12 @@ static inline GLfloat pi(void)
 	return GLMATH_PI;
 }
 
-static inline GLfloat to_degrees(GLfloat radians)
+static inline GLfloat degrees(GLfloat radians)
 {
 	return radians * (180. / pi());
 }
 
-static inline GLfloat to_radians(GLfloat degrees)
+static inline GLfloat radians(GLfloat degrees)
 {
 	return degrees * (pi() / 180.);
 }
@@ -586,6 +586,43 @@ static inline GLfloat mat3_det(const mat3 m)
 		m.a11 * (m.a22 * m.a33 - m.a23 * m.a32) +
 		m.a12 * (m.a23 * m.a31 - m.a21 * m.a33) +
 		m.a13 * (m.a21 * m.a32 - m.a22 * m.a31);
+}
+
+static inline mat3 mat3_inverse(mat3 m)
+{
+	const GLfloat det = mat3_det(m);
+
+	if (fabs(det) < GLMATH_EPSILON) {
+		return m;
+	}
+
+	mat3 adj;
+
+	m = mat3_tran(m);
+	adj.a11 = +mat2_det((mat2) {.a11 = m.a22, .a12 = m.a23, .a21 = m.a32, .a22 = m.a33}) / det;
+	adj.a12 = -mat2_det((mat2) {.a11 = m.a21, .a12 = m.a23, .a21 = m.a31, .a22 = m.a33}) / det;
+	adj.a13 = +mat2_det((mat2) {.a11 = m.a21, .a12 = m.a22, .a21 = m.a31, .a22 = m.a32}) / det;
+
+	adj.a21 = -mat2_det((mat2) {.a11 = m.a12, .a12 = m.a13, .a21 = m.a32, .a22 = m.a33}) / det;
+	adj.a22 = +mat2_det((mat2) {.a11 = m.a11, .a12 = m.a13, .a21 = m.a31, .a22 = m.a33}) / det;
+	adj.a23 = -mat2_det((mat2) {.a11 = m.a11, .a12 = m.a12, .a21 = m.a31, .a22 = m.a32}) / det;
+
+	adj.a31 = +mat2_det((mat2) {.a11 = m.a12, .a12 = m.a13, .a21 = m.a22, .a22 = m.a23}) / det;
+	adj.a32 = -mat2_det((mat2) {.a11 = m.a11, .a12 = m.a13, .a21 = m.a21, .a22 = m.a23}) / det;
+	adj.a33 = +mat2_det((mat2) {.a11 = m.a11, .a12 = m.a12, .a21 = m.a21, .a22 = m.a22}) / det;
+
+	return adj;
+}
+
+static inline mat3 mat3_normal(const mat4 m)
+{
+	const mat3 topleft = (mat3) {
+		.a11 = m.a11, .a12 = m.a12, .a13 = m.a13,
+		.a21 = m.a21, .a22 = m.a22, .a23 = m.a23,
+		.a31 = m.a31, .a32 = m.a32, .a33 = m.a33
+	};
+
+	return mat3_tran(mat3_inverse(topleft));
 }
 
 

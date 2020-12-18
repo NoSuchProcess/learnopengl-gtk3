@@ -200,7 +200,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	const mat4 view = mat4_look_at(cameraPos, vec3_add(cameraPos, cameraFront), cameraUp);
 	const GLint width = gtk_widget_get_allocated_width(GTK_WIDGET(area));
 	const GLint height = gtk_widget_get_allocated_height(GTK_WIDGET(area));
-	const mat4 projection = mat4_perspective(to_radians(fov), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
+	const mat4 projection = mat4_perspective(radians(fov), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
 
 	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -259,8 +259,8 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glUniform1f(glGetUniformLocation(program, "spotLight.constant"), 1.0f);
 	glUniform1f(glGetUniformLocation(program, "spotLight.linear"), 0.09);
 	glUniform1f(glGetUniformLocation(program, "spotLight.quadratic"), 0.032);
-	glUniform1f(glGetUniformLocation(program, "spotLight.cutOff"), cos(to_radians(12.5f)));
-	glUniform1f(glGetUniformLocation(program, "spotLight.outerCutOff"), cos(to_radians(15.0f)));
+	glUniform1f(glGetUniformLocation(program, "spotLight.cutOff"), cos(radians(12.5f)));
+	glUniform1f(glGetUniformLocation(program, "spotLight.outerCutOff"), cos(radians(15.0f)));
 
 	// model = mat4_identity();
 	// glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
@@ -273,7 +273,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, texture[1]);
 	for (unsigned int i = 0; i < G_N_ELEMENTS(cubePositions); i++) {
-		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(to_radians(20.0f * i), (vec3) { 1.0f, 0.3f, 0.5f }));
+		const mat4 model = mat4_mul(mat4_translation(cubePositions[i]), mat4_rotation(radians(20.0f * i), (vec3) { 1.0f, 0.3f, 0.5f }));
 		glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
 		glDrawArrays(GL_TRIANGLES, 0, G_N_ELEMENTS(vertices));
 	}
@@ -364,9 +364,9 @@ static gboolean motion_notify_event(GtkGLArea *drawing, GdkEvent *event, gpointe
 		pitch = -89.0f;
 	}
 	const vec3 front = (vec3) {
-		.x = cos(to_radians(pitch)) * cos(to_radians(yaw)),
-		.y = sin(to_radians(pitch)),
-		.z = cos(to_radians(pitch)) * sin(to_radians(yaw))
+		.x = cos(radians(pitch)) * cos(radians(yaw)),
+		.y = sin(radians(pitch)),
+		.z = cos(radians(pitch)) * sin(radians(yaw))
 	};
 	cameraFront = vec3_normalize(front);
 

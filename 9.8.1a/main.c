@@ -125,13 +125,13 @@ static void unrealize(GtkGLArea *area, gpointer user_data)
 
 static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_data)
 {
-	// const mat4 model = mat4_rotation_x(to_radians(30.0));
+	// const mat4 model = mat4_rotation_x(radians(30.0));
 	const mat4 view = mat4_look_at(cameraPos, vec3_add(cameraPos, cameraFront), cameraUp);
 	const vec3 lightPos = mat4_mulv3(mat4_rotation_x(g_timer_elapsed(timer, NULL)), (vec3) { 1.2f, 1.0f, 2.0f });
 
 	const GLint width = gtk_widget_get_allocated_width(GTK_WIDGET(area));
 	const GLint height = gtk_widget_get_allocated_height(GTK_WIDGET(area));
-	const mat4 projection = mat4_perspective(to_radians(fov), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
+	const mat4 projection = mat4_perspective(radians(fov), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
 
 	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -242,9 +242,9 @@ static gboolean motion_notify_event(GtkGLArea *drawing, GdkEvent *event, gpointe
 		pitch = -89.0f;
 	}
 	const vec3 front = (vec3) {
-		.x = cos(to_radians(pitch)) * cos(to_radians(yaw)),
-		.y = sin(to_radians(pitch)),
-		.z = cos(to_radians(pitch)) * sin(to_radians(yaw))
+		.x = cos(radians(pitch)) * cos(radians(yaw)),
+		.y = sin(radians(pitch)),
+		.z = cos(radians(pitch)) * sin(radians(yaw))
 	};
 	cameraFront = vec3_normalize(front);
 
@@ -291,7 +291,7 @@ static gboolean ontick(GtkWidget *drawing, GdkFrameClock *frame_clock, gpointer 
 	lastFrame = currentFrame;
 
 	model = mat4_rotation_y(currentFrame / 1.37f);
-	model = mat4_mul(mat4_rotation_x(to_radians(30.)), model);
+	model = mat4_mul(mat4_rotation_x(radians(30.)), model);
 	glUseProgram(program);
 	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
 	glUseProgram(0);

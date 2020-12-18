@@ -155,7 +155,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 
 	const GLint width = gtk_widget_get_allocated_width(GTK_WIDGET(area));
 	const GLint height = gtk_widget_get_allocated_height(GTK_WIDGET(area));
-	const mat4 projection = mat4_perspective(to_radians(fov), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
+	const mat4 projection = mat4_perspective(radians(fov), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
 
 	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -278,9 +278,9 @@ static gboolean motion_notify_event(GtkGLArea *drawing, GdkEvent *event, gpointe
 		pitch = -89.0f;
 	}
 	const vec3 front = (vec3) {
-		.x = cos(to_radians(pitch)) * cos(to_radians(yaw)),
-		.y = sin(to_radians(pitch)),
-		.z = cos(to_radians(pitch)) * sin(to_radians(yaw))
+		.x = cos(radians(pitch)) * cos(radians(yaw)),
+		.y = sin(radians(pitch)),
+		.z = cos(radians(pitch)) * sin(radians(yaw))
 	};
 	cameraFront = vec3_normalize(front);
 

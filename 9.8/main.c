@@ -156,8 +156,8 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 {
 	const GLint width = gtk_widget_get_allocated_width(GTK_WIDGET(area));
 	const GLint height = gtk_widget_get_allocated_height(GTK_WIDGET(area));
-	const mat4 model = mat4_rotation(g_timer_elapsed(timer, NULL) * to_radians(50.f), (vec3) { 0.5f, 1.0f, 0.0f });
-	const mat4 projection = mat4_perspective(to_radians(45.), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
+	const mat4 model = mat4_rotation(g_timer_elapsed(timer, NULL) * radians(50.f), (vec3) { 0.5f, 1.0f, 0.0f });
+	const mat4 projection = mat4_perspective(radians(45.), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
 
 	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);

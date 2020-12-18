@@ -103,7 +103,7 @@ static void realize(GtkGLArea *area, gpointer user_data)
 	glUniform1i(glGetUniformLocation(program, "texture1"), 0);
 	glUniform1i(glGetUniformLocation(program, "texture2"), 1);
 
-	const mat4 model = mat4_rotation_x(to_radians(-55.));
+	const mat4 model = mat4_rotation_x(radians(-55.));
 	const mat4 view = mat4_translation((vec3) { 0.0f, 0.0f, -3.0f });
 
 	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, (const GLfloat *) &model);
@@ -130,7 +130,7 @@ static gboolean render(GtkGLArea *area, GdkGLContext *context, gpointer user_dat
 {
 	const GLint width = gtk_widget_get_allocated_width(GTK_WIDGET(area));
 	const GLint height = gtk_widget_get_allocated_height(GTK_WIDGET(area));
-	const mat4 projection = mat4_perspective(to_radians(45.), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
+	const mat4 projection = mat4_perspective(radians(45.), ((GLfloat) width) / ((GLfloat) height), 1., 100.);
 
 	glClearColor(0.2, 0.3, 0.3, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
